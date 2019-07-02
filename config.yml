@@ -1,0 +1,32 @@
+# Configure system resources
+system:
+  cpus: 16
+  gpus: 0
+  memory: 32 # in GB
+
+# Set input datasets
+data:
+  edge_lists:
+    - data/edge_lists/layer_0.tsv
+    - data/edge_lists/layer_1.tsv
+    - data/edge_lists/layer_2.tsv
+  node_attributes: data/node_attributes.tsv
+  train_node_labels: data/train_node_labels.tsv
+  test_node_labels: data/test_node_labels.tsv
+
+# Enable or disable models
+models:
+  direct_neighbors: True
+  label_spreading: True
+  rwr: True
+  bagging_gcn: True
+  bagging_gcn_with_attributes: True
+  rwr_m: True
+  bagging_rgcn: True
+  bagging_rgcn_with_attributes: True
+  bagging_logistic_regression: True
+  bagging_logistic_regression_with_attributes: True
+  bagging_mlp: True
+  bagging_mlp_with_attributes: True
+  bagging_rgcn_with_embeddings: True
+

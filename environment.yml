@@ -1,0 +1,32 @@
+name: tiresias
+channels:
+  - defaults
+  - anaconda
+  - conda-forge
+dependencies:
+  - anaconda::make=4.2.1
+  - python=3.7.2
+  - matplotlib=3.0.3
+  - anaconda::numpy=1.16.2
+  - anaconda::scipy=1.2.1
+  - pandas=0.24.2
+  - scikit-learn=0.20.3
+  - pytorch::pytorch=1.1.0
+  - pytorch::torchvision=0.3.0
+  - dglteam::dgl=0.2
+  - networkx=2.2
+  - pyyaml=3.13
+  - pytest=4.3.1
+  - pip:
+      - mlflow==1.0.0
+      - ray==0.6.6
+      - setproctitle==1.1.10
+      - psutil==5.6.2
+      - requests==2.21.0
+      - rdflib==4.2.2
+      - gensim==3.7.1
+      - cytoolz==0.9.0.1
+      - tqdm==4.31.1
+      - click==7.0
+      - black==19.3b0
+      - docker==4.0.1

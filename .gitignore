@@ -1,0 +1,12 @@
+# Python
+**/__pycache__
+**/*.pyc
+
+# MLflow runs
+**/mlruns/
+
+# Pipeline artifacts
+artifacts/
+
+# Temporary files
+tmp/

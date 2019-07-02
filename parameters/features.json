@@ -1,0 +1,13 @@
+{
+  "random_walks": {
+        "walk_length": [80],
+        "n_walks": [10],
+        "p": [1],
+        "q": [1]
+    },
+    "skip_gram": {
+        "dimensions": [128],
+        "context_size": [10],
+        "epochs": [50]
+    }
+}
