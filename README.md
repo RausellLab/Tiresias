@@ -1,6 +1,6 @@
 # Tiresias
 
-A computational framework for disease gene prioritization.
+Computational framework for disease gene prediction through supervised learning on multiplex biological networks.
 
 ## Version
 
