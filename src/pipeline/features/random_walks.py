@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from src.config import artifact_stores
 from src.features import node2vec_snap
 from src.utils.parameters import param_combinations

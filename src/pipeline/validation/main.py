@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import ray
 from functools import partial
 from src import config

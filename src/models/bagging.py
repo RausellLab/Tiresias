@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import torch
 from src.utils.misc import random_choice
 

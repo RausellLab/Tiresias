@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from src import config
 from src.utils.misc import product_dict
 

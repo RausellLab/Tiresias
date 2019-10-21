@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from src import config
 from src.config import artifact_stores
 from src.features import skip_gram

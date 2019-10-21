@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import re
 import docker
 from src import config

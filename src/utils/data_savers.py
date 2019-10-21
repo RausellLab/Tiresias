@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import mlflow
 import numpy as np
 from src.utils.metrics import cumulative_distribution_function

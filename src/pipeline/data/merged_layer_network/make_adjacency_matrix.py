@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from scipy import sparse
 from os import path
 from src import config

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import numpy as np
 from gensim.models import Word2Vec
 from src.utils import io

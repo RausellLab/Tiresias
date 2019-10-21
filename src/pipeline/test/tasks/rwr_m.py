@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import mlflow
 import torch
 import ray

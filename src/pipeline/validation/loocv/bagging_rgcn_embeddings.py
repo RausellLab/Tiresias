@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import ray
 from src.models import Bagging
 from src.models import RGCN

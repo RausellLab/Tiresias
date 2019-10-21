@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import ray
 import mlflow
 from src.models import Bagging

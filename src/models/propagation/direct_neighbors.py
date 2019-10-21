@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import torch
 from dgl import function as fn
 

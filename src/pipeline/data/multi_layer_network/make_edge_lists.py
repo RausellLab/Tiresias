@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from os import path
 from src import config
 from src.config import artifact_stores
