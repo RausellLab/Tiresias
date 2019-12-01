@@ -31,8 +31,11 @@ conda env create -f environment.yml && conda activate tiresias
 3. Pull node2vec Docker image.
 
 ````bash
-make node2vec_image
+make node2vec-image
 ````
+
+> If you get an error at this point, the first thing to do is to check that Docker is configured properly.
+See ["Manage Docker as a non-root user"](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
 You can now check that the framework works properly by launching the data pipeline with dummy input data:
 
@@ -51,7 +54,7 @@ Then, go to [http://localhost:5000/](http://localhost:5000/) in your web browser
 Once you're done, clean up the intermediary and output files created by the pipeline:
 
 ````bash
-rm -rf artifacts/ tmp/ mlflow/
+make clean-all
 ````
 
 ## Usage
@@ -69,6 +72,7 @@ Set up the parameters used for featurization and for running the models by modif
 * `parameters/features.json`: contains the parameters used to run random walks and to create node embeddings.
 * `parameters/models_validation.json`: contains model parameters used during the **validation** stage.
 * `parameters/models_test.json`: contains model parameters used during the **test** stage.
+Note that those parameters are also used for outputting a final ranking of potential disease genes during the **predict** stage.
 
 3. System and models
 
@@ -97,7 +101,7 @@ make data
 
 2. Random walks
 ````bash
-make random_walks
+make random-walks
 ````
 
 3. Node embeddings
@@ -115,9 +119,14 @@ make validation
 make test
 ````
 
+6. Predict
+````bash
+make predict
+````
+
 ### Visualize results with MLFlow
 
-Model run results are recorded using [MLFlow](https://mlflow.org/). Results are stored in the `mlflow/` directory.
+Model run results are recorded using [MLFlow](https://mlflow.org/). Results are stored in the `mlruns/` directory.
 
 You can browse results with MLFlow UI. To do so, launch MLFlow UI.
 ````bash

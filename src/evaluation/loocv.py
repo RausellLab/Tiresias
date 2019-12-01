@@ -4,8 +4,7 @@ import numpy as np
 
 
 def run(labels, model_class, **kwargs):
-    """
-    Run Leave One Out Cross Validation (LOOCV).
+    """Run Leave One Out Cross Validation (LOOCV).
 
     Parameters
     ----------
@@ -58,7 +57,9 @@ def run(labels, model_class, **kwargs):
         )  # consider all the instances for training
         train_mask[current_node_idx] = 0  # remove current gene from train_mask
         model.reset_parameters()  # reset model parameters
-        model.fit(train_labels=labels[train_mask], train_mask=train_mask)  # train the model
+        model.fit(
+            train_labels=labels[train_mask], train_mask=train_mask
+        )  # train the model
         predictions = model.predict_proba()  # get predictions
 
         if predictions.is_cuda:
@@ -75,7 +76,8 @@ def run(labels, model_class, **kwargs):
         # Compute gene ranks according to predictions
         predictions_df["rank"] = predictions_df.rank(
             ascending=False,
-            method="max",  # Equal values are assigned the highest rank in the group i.e. the worst.
+            # Equal values are assigned the highest rank in the group i.e. the worst.
+            method="max",
         )
 
         # Add rank of current gene to dataframe

@@ -2,8 +2,7 @@ import numpy as np
 
 
 def cumulative_distribution_function(ranks, n_nodes):
-    """
-    Cumulative distribution function.
+    """Cumulative distribution function.
 
     Parameters
     ----------

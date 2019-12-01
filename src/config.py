@@ -53,13 +53,16 @@ with open(path.join(root_dir, "parameters", "models_test.json")) as param_file:
 
 artifact_stores = SimpleNamespace(
     adjacency_matrices=SimpleNamespace(
-        merged_layer=ArtifactStore(path.join(root_dir, "artifacts", "adjacency_matrices", "merged_layer")),
-        multi_layer=ArtifactStore(path.join(root_dir, "artifacts", "adjacency_matrices", "multi_layer"))
+        merged_layer=ArtifactStore(
+            path.join(root_dir, "artifacts", "adjacency_matrices", "merged_layer")
+        ),
+        multi_layer=ArtifactStore(
+            path.join(root_dir, "artifacts", "adjacency_matrices", "multi_layer")
+        ),
     ),
     edge_lists=ArtifactStore(path.join(root_dir, "artifacts", "edge_lists")),
     random_walks=ArtifactStore(path.join(root_dir, "artifacts", "random_walks")),
-    embeddings=ArtifactStore(path.join(root_dir, "artifacts", "embeddings"))
+    embeddings=ArtifactStore(path.join(root_dir, "artifacts", "embeddings")),
 )
 
 NODE2VEC_DOCKER_IMAGE = "thibaudma/node2vec"
-

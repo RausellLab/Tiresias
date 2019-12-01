@@ -2,8 +2,7 @@ import torch
 
 
 def set_diagonal(A, val):
-    """
-    Sets diagonal elements of a matrix.
+    """Sets diagonal elements of a matrix.
 
     Parameters
     ----------
@@ -16,8 +15,7 @@ def set_diagonal(A, val):
 
 
 def remove_self_loops(A):
-    """
-    Removes self loops in an adjacency matrix of a graph.
+    """Removes self loops in an adjacency matrix of a graph.
 
     Parameters
     ----------
@@ -28,8 +26,7 @@ def remove_self_loops(A):
 
 
 def add_self_loops(A):
-    """
-    Adds self loops in an adjacency matrix of a graph.
+    """Adds self loops in an adjacency matrix of a graph.
 
     Parameters
     ----------

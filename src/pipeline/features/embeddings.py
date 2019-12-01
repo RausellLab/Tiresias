@@ -10,9 +10,9 @@ def embeddings(random_walk_files, dimensions, context_size, epochs, params):
         skip_gram={
             "dimensions": dimensions,
             "context_size": context_size,
-            "epochs": epochs
+            "epochs": epochs,
         },
-        **params
+        **params,
     )
 
     outfile = container.create_artifact_filepath(f"embeddings.txt")
@@ -29,13 +29,15 @@ def embeddings(random_walk_files, dimensions, context_size, epochs, params):
 
 def main():
     for random_walk_files, file_params in artifact_stores.random_walks:
-        for skip_gram_params in param_combinations(stage="features", model_name="skip_gram"):
+        for skip_gram_params in param_combinations(
+            stage="features", model_name="skip_gram"
+        ):
             embeddings(
                 random_walk_files,
                 dimensions=skip_gram_params["dimensions"],
                 context_size=skip_gram_params["context_size"],
                 epochs=skip_gram_params["epochs"],
-                params=file_params
+                params=file_params,
             )
 
 

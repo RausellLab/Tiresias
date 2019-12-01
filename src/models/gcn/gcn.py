@@ -8,8 +8,7 @@ from src.models.gcn.base import BaseGCNLayer
 
 
 class GCN(BaseGCN):
-    """
-    Graph Convolutional Network classifier.
+    """Graph Convolutional Network classifier.
 
     References
     ----------
@@ -18,14 +17,7 @@ class GCN(BaseGCN):
     """
 
     def __init__(
-        self,
-        graph,
-        n_hidden_feats,
-        n_hidden_layers,
-        dropout,
-        features,
-        epochs,
-        lr
+        self, graph, n_hidden_feats, n_hidden_layers, dropout, features, epochs, lr
     ):
         super().__init__(
             graph,
@@ -37,7 +29,7 @@ class GCN(BaseGCN):
             features,
             epochs,
             lr,
-            weight_decay=0
+            weight_decay=0,
         )
 
 

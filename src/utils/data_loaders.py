@@ -1,6 +1,5 @@
 import torch
 import dgl
-import numpy as np
 from scipy import sparse
 from src.utils import matrix
 from src.utils import converters
@@ -8,7 +7,7 @@ from src.utils import io
 
 
 def get_device(use_cuda):
-    return torch.device('cuda') if use_cuda else torch.device('cpu')
+    return torch.device("cuda") if use_cuda else torch.device("cpu")
 
 
 def load_labels(labels_file, use_cuda=False):
@@ -19,7 +18,9 @@ def load_labels(labels_file, use_cuda=False):
     return torch.tensor(labels, dtype=torch.long, device=device)
 
 
-def load_adj_matrices(adj_matrix_files, self_loop=False, normalization=None, use_cuda=False):
+def load_adj_matrices(
+    adj_matrix_files, self_loop=False, normalization=None, use_cuda=False
+):
     """Loads adjacency matrix for an experiment."""
     adj_matrices = []
     device = get_device(use_cuda)
@@ -54,9 +55,8 @@ def load_graph(
     add_node_ids=False,
     use_cuda=False,
 ):
-    """
-    Creates a DGL graph from a list of adjacency matrix files.
-    Each adjacency matrix represents a layer of the graph.
+    """Creates a DGL graph from a list of adjacency matrix files. Each
+    adjacency matrix represents a layer of the graph.
 
     adj_matrix_files: list
         The list of files containing the adjacency matrix.
@@ -115,7 +115,9 @@ def load_graph(
         # Add edge type
         if add_edge_type:
             # todo: replace with new_full
-            edge_data["type"] = torch.zeros(n_edges, dtype=torch.long, device=device).fill_(index)
+            edge_data["type"] = torch.zeros(
+                n_edges, dtype=torch.long, device=device
+            ).fill_(index)
 
         # Add edges
         graph.add_edges(src, dst, edge_data)
@@ -145,5 +147,5 @@ def load_node_features(node_features_file, use_cuda=False):
     return torch.tensor(
         io.read_node_attributes(node_features_file).values,
         dtype=torch.float,
-        device=device
+        device=device,
     )

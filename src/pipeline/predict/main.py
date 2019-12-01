@@ -3,17 +3,17 @@ from functools import partial
 from src import config
 from src.config import artifact_stores
 from src.utils.parameters import param_combinations
-from src.pipeline.test.tasks.direct_neighbors import direct_neighbors
-from src.pipeline.test.tasks.net_prop_with_restart import label_spreading
-from src.pipeline.test.tasks.net_prop_with_restart import rwr
-from src.pipeline.test.tasks.bagging_logistic_regression import (
+from src.pipeline.predict.tasks.direct_neighbors import direct_neighbors
+from src.pipeline.predict.tasks.net_prop_with_restart import label_spreading
+from src.pipeline.predict.tasks.net_prop_with_restart import rwr
+from src.pipeline.predict.tasks.bagging_logistic_regression import (
     bagging_logistic_regression,
 )
-from src.pipeline.test.tasks.bagging_mlp import bagging_mlp
-from src.pipeline.test.tasks.bagging_gcn import bagging_gcn
-from src.pipeline.test.tasks.bagging_rgcn import bagging_rgcn
-from src.pipeline.test.tasks.rwr_m import rwr_m
-from src.pipeline.test.tasks.bagging_rgcn_embeddings import bagging_rgcn_embeddings
+from src.pipeline.predict.tasks.bagging_mlp import bagging_mlp
+from src.pipeline.predict.tasks.bagging_gcn import bagging_gcn
+from src.pipeline.predict.tasks.bagging_rgcn import bagging_rgcn
+from src.pipeline.predict.tasks.rwr_m import rwr_m
+from src.pipeline.predict.tasks.bagging_rgcn_embeddings import bagging_rgcn_embeddings
 
 
 param_combinations = partial(param_combinations, "test")

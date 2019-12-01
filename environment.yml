@@ -29,5 +29,5 @@ dependencies:
       - cytoolz==0.9.0.1
       - tqdm==4.31.1
       - click==7.0
-      - black==19.3b0
+      - black==19.10b0
       - docker==4.0.1

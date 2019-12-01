@@ -6,9 +6,8 @@ from src.utils import io
 def run(
     random_walk_files, output_file, dimensions=128, context_size=10, epochs=1, workers=1
 ):
-    """
-    Generates node vector embeddings from a list of files containing random walks performed on different layers of a
-    multilayer network.
+    """Generates node vector embeddings from a list of files containing random
+    walks performed on different layers of a multilayer network.
 
     Parameters
     ----------

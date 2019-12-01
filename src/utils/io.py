@@ -25,8 +25,7 @@ def read_edge_list(file):
 
 
 def read_random_walks(random_walks_file):
-    """
-    Reads a list of random walks from a text file.
+    """Reads a list of random walks from a text file.
 
     Parameters
     ----------
@@ -42,8 +41,7 @@ def read_random_walks(random_walks_file):
 
 
 def read_embeddings(input_file):
-    """
-    Loads vector embeddings from text file.
+    """Loads vector embeddings from text file.
 
     Parameters
     ----------
@@ -91,9 +89,4 @@ def read_embeddings(input_file):
 
 
 def read_node_attributes(file):
-    return pd.read_csv(
-        file,
-        sep="\t",
-        index_col=[0],
-        dtype=float
-    )
+    return pd.read_csv(file, sep="\t", index_col=[0], dtype=float)

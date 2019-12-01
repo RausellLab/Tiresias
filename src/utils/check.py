@@ -2,8 +2,7 @@ import torch
 
 
 def matrix_symmetry(matrix):
-    """
-    Checks the symmetry of the input matrix.
+    """Checks the symmetry of the input matrix.
 
     Parameters
     ----------
@@ -15,8 +14,7 @@ def matrix_symmetry(matrix):
 
 
 def pu_labels(labels):
-    """
-    Checks that the input labels correspond to a PU learning setting.
+    """Checks that the input labels correspond to a PU learning setting.
 
     Parameters
     ----------
@@ -31,8 +29,8 @@ def pu_labels(labels):
 
 
 def adj_matrix_labels_dim(adj_matrix, labels):
-    """
-    Checks that the dimensions of the adjacency matrix and the labels vector are compatible.
+    """Checks that the dimensions of the adjacency matrix and the labels vector
+    are compatible.
 
     Parameters
     ----------
@@ -49,8 +47,8 @@ def adj_matrix_labels_dim(adj_matrix, labels):
 
 
 def features_labels_dim(features, labels):
-    """
-    Checks that the dimensions of the features matrix and the labels vector are compatible.
+    """Checks that the dimensions of the features matrix and the labels vector
+    are compatible.
 
     Parameters
     ----------

@@ -11,8 +11,7 @@ def save_ranks(ranks_df, n_nodes, run_name, params=None):
     u_mlflow.log_dataframe(ranks_df, "ranks", "results")
 
     cum_dist = cumulative_distribution_function(
-        ranks=ranks_df["rank"].values,
-        n_nodes=n_nodes
+        ranks=ranks_df["rank"].values, n_nodes=n_nodes
     )
 
     u_mlflow.log_ndarray(cum_dist, "cum_dist", "results")

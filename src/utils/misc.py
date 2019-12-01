@@ -3,7 +3,8 @@ import torch
 
 
 def product_dict(**kwargs):
-    """Returns the cartesian product of the parameters as an iterator of dictionaries."""
+    """Returns the cartesian product of the parameters as an iterator of
+    dictionaries."""
     keys = kwargs.keys()
     vals = kwargs.values()
     for instance in itertools.product(*vals):
@@ -11,9 +12,8 @@ def product_dict(**kwargs):
 
 
 def random_choice(a, size):
-    """
-    Generates a random sample of a given size from a 1-D tensor.
-    The sample is drawn without replacement.
+    """Generates a random sample of a given size from a 1-D tensor. The sample
+    is drawn without replacement.
 
     Parameters
     ----------
