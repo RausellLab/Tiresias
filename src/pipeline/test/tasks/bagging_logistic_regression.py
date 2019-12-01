@@ -21,7 +21,7 @@ def bagging_logistic_regression(
     node_features_file,
     use_cuda,
     params,
-    metadata
+    metadata,
 ):
     mlflow.set_experiment("Test")
 
@@ -32,7 +32,9 @@ def bagging_logistic_regression(
         u_mlflow.add_metadata(metadata)
         mlflow.set_tag("use_cuda", use_cuda)
 
-        train_labels = data_loaders.load_labels(train_node_labels_file, use_cuda=use_cuda)
+        train_labels = data_loaders.load_labels(
+            train_node_labels_file, use_cuda=use_cuda
+        )
         test_labels = data_loaders.load_labels(test_node_labels_file, use_cuda=use_cuda)
         labels = (train_labels.byte() | test_labels.byte()).long()
         train_mask = ~test_labels.byte()
@@ -45,14 +47,18 @@ def bagging_logistic_regression(
         if embeddings_file is not None:
             mlflow.log_param("embeddings", True)
             mlflow.log_artifact(embeddings_file, "inputs")
-            embeddings = data_loaders.load_embeddings(embeddings_file, use_cuda=use_cuda)
+            embeddings = data_loaders.load_embeddings(
+                embeddings_file, use_cuda=use_cuda
+            )
         else:
             mlflow.log_param("embeddings", False)
 
         if node_features_file is not None:
             mlflow.log_param("node_features", True)
             mlflow.log_artifact(node_features_file, "inputs")
-            node_features = data_loaders.load_node_features(node_features_file, use_cuda)
+            node_features = data_loaders.load_node_features(
+                node_features_file, use_cuda
+            )
         else:
             mlflow.log_param("node_features", False)
 

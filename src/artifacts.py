@@ -51,4 +51,7 @@ class ArtifactContainer:
         return path.join(self.artifact_dir_path, filename)
 
     def list_artifacts(self):
-        return [os.path.join(self.artifact_dir_path, filepath) for filepath in os.listdir(self.artifact_dir_path)]
+        return [
+            os.path.join(self.artifact_dir_path, filepath)
+            for filepath in os.listdir(self.artifact_dir_path)
+        ]

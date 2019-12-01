@@ -15,13 +15,15 @@ def plot_cumulative_distribution(x_nodes, y_cum_dist, auc, name, params=None):
     ax.set_ylabel("Cumulative distribution")
 
     params = "\n".join([f"{key}: {value}" for key, value in params.items()])
-    label = f"{name}\n\n" \
-            f"Parameters\n" \
-            f"--\n" \
-            f"{params}\n\n" \
-            f"Metrics\n" \
-            f"--\n" \
-            f"AUC: {auc:.3f}"
+    label = (
+        f"{name}\n\n"
+        f"Parameters\n"
+        f"--\n"
+        f"{params}\n\n"
+        f"Metrics\n"
+        f"--\n"
+        f"AUC: {auc:.3f}"
+    )
     ax.plot(x_nodes, y_cum_dist, label=label)
     ax.legend(bbox_to_anchor=(1, 0.5), loc="center left")
 

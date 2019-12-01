@@ -6,7 +6,9 @@ from src.utils.parameters import param_combinations
 from src.pipeline.test.tasks.direct_neighbors import direct_neighbors
 from src.pipeline.test.tasks.net_prop_with_restart import label_spreading
 from src.pipeline.test.tasks.net_prop_with_restart import rwr
-from src.pipeline.test.tasks.bagging_logistic_regression import bagging_logistic_regression
+from src.pipeline.test.tasks.bagging_logistic_regression import (
+    bagging_logistic_regression,
+)
 from src.pipeline.test.tasks.bagging_mlp import bagging_mlp
 from src.pipeline.test.tasks.bagging_gcn import bagging_gcn
 from src.pipeline.test.tasks.bagging_rgcn import bagging_rgcn
@@ -28,7 +30,7 @@ def main():
         num_cpus=config.cpus,
         num_gpus=config.gpus,
         resources={"memory": config.memory},
-        temp_dir=config.temp_dir
+        temp_dir=config.temp_dir,
     )
 
     results = []
@@ -36,7 +38,10 @@ def main():
     test_node_labels_file = config.test_node_labels_file
     node_attributes_file = config.node_attributes_file
 
-    for adjacency_matrix_files, metadata in artifact_stores.adjacency_matrices.merged_layer:
+    for (
+        adjacency_matrix_files,
+        metadata,
+    ) in artifact_stores.adjacency_matrices.merged_layer:
         adjacency_matrix_file = adjacency_matrix_files[0]
 
         if config.models["direct_neighbors"]:
@@ -45,7 +50,7 @@ def main():
                 train_node_labels_file,
                 test_node_labels_file,
                 use_cuda,
-                metadata
+                metadata,
             )
             results.append(dn_res)
 
@@ -57,7 +62,7 @@ def main():
                     test_node_labels_file,
                     use_cuda,
                     params,
-                    metadata
+                    metadata,
                 )
                 results.append(ls_res)
 
@@ -69,7 +74,7 @@ def main():
                     test_node_labels_file,
                     use_cuda,
                     params,
-                    metadata
+                    metadata,
                 )
                 results.append(rwr_res)
 
@@ -82,7 +87,7 @@ def main():
                     test_node_labels_file,
                     use_cuda,
                     params,
-                    metadata
+                    metadata,
                 )
                 results.append(bagging_gcn_res)
 
@@ -95,11 +100,14 @@ def main():
                     test_node_labels_file,
                     use_cuda,
                     params,
-                    metadata
+                    metadata,
                 )
                 results.append(bagging_gcn_att_res)
 
-    for adjacency_matrix_files, metadata in artifact_stores.adjacency_matrices.multi_layer:
+    for (
+        adjacency_matrix_files,
+        metadata,
+    ) in artifact_stores.adjacency_matrices.multi_layer:
 
         if config.models["rwr_m"]:
             for params in param_combinations("rwr_m"):
@@ -109,7 +117,7 @@ def main():
                     test_node_labels_file,
                     False,
                     params,
-                    metadata
+                    metadata,
                 )
                 results.append(rwr_m_res)
 
@@ -122,7 +130,7 @@ def main():
                     None,
                     use_cuda,
                     params,
-                    metadata
+                    metadata,
                 )
                 results.append(bagging_rgcn_res)
 
@@ -135,7 +143,7 @@ def main():
                     node_attributes_file,
                     use_cuda,
                     params,
-                    metadata
+                    metadata,
                 )
                 results.append(bagging_rgcn_att_res)
 
@@ -143,7 +151,9 @@ def main():
         embeddings_file = embeddings_files[0]
 
         if config.models["bagging_logistic_regression"]:
-            for bagging_log_reg_params in param_combinations("bagging_logistic_regression"):
+            for bagging_log_reg_params in param_combinations(
+                "bagging_logistic_regression"
+            ):
                 lg_res = bagging_logistic_regression.remote(
                     embeddings_file,
                     train_node_labels_file,
@@ -151,12 +161,14 @@ def main():
                     None,
                     use_cuda,
                     bagging_log_reg_params,
-                    metadata
+                    metadata,
                 )
                 results.append(lg_res)
 
         if config.models["bagging_logistic_regression_with_attributes"]:
-            for bagging_log_reg_params in param_combinations("bagging_logistic_regression_with_attributes"):
+            for bagging_log_reg_params in param_combinations(
+                "bagging_logistic_regression_with_attributes"
+            ):
                 lg_att_res = bagging_logistic_regression.remote(
                     embeddings_file,
                     train_node_labels_file,
@@ -164,7 +176,7 @@ def main():
                     node_attributes_file,
                     use_cuda,
                     bagging_log_reg_params,
-                    metadata
+                    metadata,
                 )
                 results.append(lg_att_res)
 
@@ -177,7 +189,7 @@ def main():
                     None,
                     use_cuda,
                     bagging_mlp_params,
-                    metadata
+                    metadata,
                 )
                 results.append(mlp_res)
 
@@ -190,18 +202,21 @@ def main():
                     node_attributes_file,
                     use_cuda,
                     bagging_mlp_params,
-                    metadata
+                    metadata,
                 )
                 results.append(mlp_res)
 
     if config.models["bagging_rgcn_with_embeddings"]:
-        for adjacency_matrix_files, metadata_adj in artifact_stores.adjacency_matrices.multi_layer:
+        for (
+            adjacency_matrix_files,
+            metadata_adj,
+        ) in artifact_stores.adjacency_matrices.multi_layer:
             for embeddings_files, metadata_embed in artifact_stores.embeddings:
                 embeddings_file = embeddings_files[0]
 
                 metadata = {
                     "edge_lists": metadata_embed,
-                    "adjacency_matrices": metadata_adj
+                    "adjacency_matrices": metadata_adj,
                 }
 
                 for params in param_combinations("bagging_rgcn_with_embeddings"):
@@ -212,7 +227,7 @@ def main():
                         embeddings_file,
                         use_cuda,
                         params,
-                        metadata
+                        metadata,
                     )
                     results.append(res)
 

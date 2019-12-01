@@ -7,7 +7,15 @@ from src.utils import data_savers
 from src.utils import mlflow as u_mlflow
 
 
-def net_prop_with_restart(run_name, normalization, adj_matrix_file, node_labels_file, use_cuda, params, metadata):
+def net_prop_with_restart(
+    run_name,
+    normalization,
+    adj_matrix_file,
+    node_labels_file,
+    use_cuda,
+    params,
+    metadata,
+):
     mlflow.set_experiment("LOOCV")
 
     with mlflow.start_run(run_name=run_name):
@@ -22,9 +30,7 @@ def net_prop_with_restart(run_name, normalization, adj_matrix_file, node_labels_
         n_nodes = labels.size(0)
 
         adjacency_matrix = data_loaders.load_adj_matrices(
-            [adj_matrix_file],
-            normalization=normalization,
-            use_cuda=use_cuda
+            [adj_matrix_file], normalization=normalization, use_cuda=use_cuda
         )[0]
 
         print(run_name)
@@ -40,9 +46,25 @@ def net_prop_with_restart(run_name, normalization, adj_matrix_file, node_labels_
 
 @ray.remote(num_gpus=1)
 def rwr(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
-    net_prop_with_restart("Random walk with restart", "rw", adj_matrix_file, node_labels_file, use_cuda, params, metadata)
+    net_prop_with_restart(
+        "Random walk with restart",
+        "rw",
+        adj_matrix_file,
+        node_labels_file,
+        use_cuda,
+        params,
+        metadata,
+    )
 
 
 @ray.remote(num_gpus=1)
 def label_spreading(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
-    net_prop_with_restart("Label Spreading", "sym", adj_matrix_file, node_labels_file, use_cuda, params, metadata)
+    net_prop_with_restart(
+        "Label Spreading",
+        "sym",
+        adj_matrix_file,
+        node_labels_file,
+        use_cuda,
+        params,
+        metadata,
+    )

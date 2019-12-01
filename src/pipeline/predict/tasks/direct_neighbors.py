@@ -19,7 +19,7 @@ def direct_neighbors(
     with mlflow.start_run(run_name=RUN_NAME):
         u_mlflow.add_metadata(metadata)
         mlflow.set_tag("use_cuda", use_cuda)
-        mlflow.log_param("model", direct_neighbors)
+        mlflow.log_param("model", MODEL_NAME)
 
         train_labels = data_loaders.load_labels(
             train_node_labels_file, use_cuda=use_cuda

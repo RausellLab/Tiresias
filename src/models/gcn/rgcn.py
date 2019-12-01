@@ -7,8 +7,7 @@ from src.models.gcn.base import BaseGCNLayer
 
 
 class RGCN(BaseGCN):
-    """
-    Relational Graph Convolutional Network classifier.
+    """Relational Graph Convolutional Network classifier.
 
     References
     ----------
@@ -27,7 +26,7 @@ class RGCN(BaseGCN):
         features,
         epochs,
         lr,
-        weight_decay
+        weight_decay,
     ):
         super().__init__(
             graph,

@@ -21,8 +21,7 @@ def run(
     weighted_graph=False,
     output_random_walks=False,
 ):
-    """
-    Wrapper around node2vec C++ SNAP implementation.
+    """Wrapper around node2vec C++ SNAP implementation.
 
     Parameters
     ----------
@@ -115,7 +114,7 @@ def run_docker_container(input_file, output_file, cmd_args, verbose=True):
                 input_file: {"bind": CONTAINER_INPUT_FILE, "mode": "ro"},
                 output_file: {"bind": CONTAINER_OUTPUT_FILE, "mode": "rw"},
             },
-            detach=True
+            detach=True,
         )
 
         if verbose:

@@ -16,12 +16,7 @@ SELF_LOOP = True
 
 @ray.remote(num_gpus=1)
 def bagging_rgcn(
-    adj_matrix_files,
-    node_labels_file,
-    node_features_file,
-    use_cuda,
-    params,
-    metadata
+    adj_matrix_files, node_labels_file, node_features_file, use_cuda, params, metadata
 ):
     mlflow.set_experiment("LOOCV")
 
@@ -64,4 +59,3 @@ def bagging_rgcn(
         )
 
         data_savers.save_ranks(ranks_df, n_nodes, RUN_NAME, params)
-

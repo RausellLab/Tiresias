@@ -18,7 +18,7 @@ def direct_neighbors(adj_matrix_file, node_labels_file, use_cuda, metadata):
     with mlflow.start_run(run_name=RUN_NAME):
         u_mlflow.add_metadata(metadata)
         mlflow.set_tag("use_cuda", use_cuda)
-        mlflow.log_param("model", direct_neighbors)
+        mlflow.log_param("model", MODEL_NAME)
         mlflow.log_param("merged_layers", True)
 
         labels = data_loaders.load_labels(node_labels_file, use_cuda=use_cuda)
@@ -33,10 +33,6 @@ def direct_neighbors(adj_matrix_file, node_labels_file, use_cuda, metadata):
         )
 
         print(RUN_NAME)
-        ranks_df = loocv.run(
-            labels=labels,
-            model_class=DirectNeighbors,
-            graph=graph
-        )
+        ranks_df = loocv.run(labels=labels, model_class=DirectNeighbors, graph=graph)
 
         data_savers.save_ranks(ranks_df, n_nodes, RUN_NAME)

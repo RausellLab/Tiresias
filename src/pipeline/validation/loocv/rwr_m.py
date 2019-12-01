@@ -24,9 +24,7 @@ def rwr_m(adj_matrix_files, node_labels_file, use_cuda, params, metadata):
 
         print("Loading adjacency matrices")
         adj_matrices = data_loaders.load_adj_matrices(
-            adj_matrix_files,
-            normalization=None,
-            use_cuda=use_cuda
+            adj_matrix_files, normalization=None, use_cuda=use_cuda
         )
 
         adjacency_matrices = torch.stack(adj_matrices)

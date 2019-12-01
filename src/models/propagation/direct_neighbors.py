@@ -3,9 +3,9 @@ from dgl import function as fn
 
 
 class DirectNeighbors:
-    """
-    Naive network propagation method for positive-unlabelled learning on an undirected network.
-    The model predicts that all the direct neighbors of a positively labelled node have a positive label.
+    """Naive network propagation method for positive-unlabelled learning on an
+    undirected network. The model predicts that all the direct neighbors of a
+    positively labelled node have a positive label.
 
     Parameters
     ----------
@@ -21,8 +21,7 @@ class DirectNeighbors:
         self.predictions = None
 
     def fit(self, train_labels, train_mask):
-        """
-        Trains the model.
+        """Trains the model.
 
         Parameters
         ----------
@@ -52,8 +51,8 @@ class DirectNeighbors:
         self.predictions = self.graph.ndata["l"]
 
     def predict_proba(self):
-        """
-        For each data sample, outputs the probability that it belongs to the positive class.
+        """For each data sample, outputs the probability that it belongs to the
+        positive class.
 
         Returns
         -------
