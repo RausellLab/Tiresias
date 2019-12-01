@@ -31,8 +31,11 @@ conda env create -f environment.yml && conda activate tiresias
 3. Pull node2vec Docker image.
 
 ````bash
-make node2vec_image
+make node2vec-image
 ````
+
+> If you get an error at this point, the first thing to do is to check that Docker is configured properly.
+See ["Manage Docker as a non-root user"](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
 You can now check that the framework works properly by launching the data pipeline with dummy input data:
 
@@ -51,7 +54,7 @@ Then, go to [http://localhost:5000/](http://localhost:5000/) in your web browser
 Once you're done, clean up the intermediary and output files created by the pipeline:
 
 ````bash
-rm -rf artifacts/ tmp/ mlflow/
+make clean-all
 ````
 
 ## Usage
@@ -97,7 +100,7 @@ make data
 
 2. Random walks
 ````bash
-make random_walks
+make random-walks
 ````
 
 3. Node embeddings
@@ -113,6 +116,11 @@ make validation
 5. Test
 ````bash
 make test
+````
+
+6. Predict
+````bash
+make predict
 ````
 
 ### Visualize results with MLFlow

@@ -1,16 +1,17 @@
-pipeline: data random_walks embeddings validation test
+SHELL := /bin/bash
 
-data: data_merged_layer data_multi_layer
-
-data_multi_layer:
+data-multi-layer:
 	python -m src.pipeline.data.multi_layer_network.make_adjacency_matrices
 	python -m src.pipeline.data.multi_layer_network.make_edge_lists
 
-data_merged_layer:
+data-merged-layer:
 	python -m src.pipeline.data.merged_layer_network.make_adjacency_matrix
 	python -m src.pipeline.data.merged_layer_network.make_edge_list
 
-random_walks:
+data:
+	$(MAKE) data-multi-layer data-merged-layer
+
+random-walks:
 	python -m src.pipeline.features.random_walks
 
 embeddings:
@@ -22,7 +23,24 @@ validation:
 test:
 	python -m src.pipeline.test.main
 
-node2vec_image:
+predict:
+	python -m src.pipeline.predict.main
+
+pipeline:
+	$(MAKE) data random-walks embeddings validation test predict
+
+CLEAN_INTERM_MSG := "WARNING: This will erase intermediary directories (artifacts/ and tmp/). Continue? (Y/N): "
+clean-interm:
+	@read -p $(CLEAN_INTERM_MSG) confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || exit 1
+	rm -rf artifacts/ tmp/
+
+CLEAN_ALL_MSG := "WARNING: This will erase ALL generated files. Continue? (Y/N): "
+clean-all:
+	@read -p $(CLEAN_ALL_MSG) confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || exit 1
+	rm -rf artifacts/ tmp/ mlruns/
+
+node2vec-image:
 	python -m src.init.pull_node2vec
 
-.PHONY: pipeline data data_multi_layer data_merged_layer random_walks embeddings validation test
+.PHONY: data-multi-layer data-merged-layer data random-walks embeddings validation test predict pipeline node2vec-image
+.DEFAULT_GOAL := pipeline
