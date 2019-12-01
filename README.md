@@ -72,6 +72,7 @@ Set up the parameters used for featurization and for running the models by modif
 * `parameters/features.json`: contains the parameters used to run random walks and to create node embeddings.
 * `parameters/models_validation.json`: contains model parameters used during the **validation** stage.
 * `parameters/models_test.json`: contains model parameters used during the **test** stage.
+Note that those parameters are also used for outputting a final ranking of potential disease genes during the **predict** stage.
 
 3. System and models
 
@@ -125,7 +126,7 @@ make predict
 
 ### Visualize results with MLFlow
 
-Model run results are recorded using [MLFlow](https://mlflow.org/). Results are stored in the `mlflow/` directory.
+Model run results are recorded using [MLFlow](https://mlflow.org/). Results are stored in the `mlruns/` directory.
 
 You can browse results with MLFlow UI. To do so, launch MLFlow UI.
 ````bash
