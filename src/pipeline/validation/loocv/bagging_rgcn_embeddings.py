@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import ray
 from src.models import Bagging
 from src.models import RGCN
@@ -18,12 +16,7 @@ SELF_LOOP = True
 
 @ray.remote(num_gpus=1)
 def bagging_rgcn_embeddings(
-    adj_matrix_files,
-    node_labels_file,
-    embeddings_file,
-    use_cuda,
-    params,
-    metadata
+    adj_matrix_files, node_labels_file, embeddings_file, use_cuda, params, metadata
 ):
     mlflow.set_experiment("LOOCV")
 
@@ -60,4 +53,3 @@ def bagging_rgcn_embeddings(
         )
 
         data_savers.save_ranks(ranks_df, n_nodes, RUN_NAME, params)
-

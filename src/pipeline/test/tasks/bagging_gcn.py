@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import ray
 import mlflow
 from src.models import Bagging
@@ -24,7 +22,7 @@ def bagging_gcn(
     test_node_labels_file,
     use_cuda,
     params,
-    metadata
+    metadata,
 ):
     mlflow.set_experiment("Test")
 
@@ -34,7 +32,9 @@ def bagging_gcn(
         u_mlflow.add_metadata(metadata)
         mlflow.set_tag("use_cuda", use_cuda)
 
-        train_labels = data_loaders.load_labels(train_node_labels_file, use_cuda=use_cuda)
+        train_labels = data_loaders.load_labels(
+            train_node_labels_file, use_cuda=use_cuda
+        )
         test_labels = data_loaders.load_labels(test_node_labels_file, use_cuda=use_cuda)
         labels = (train_labels.byte() | test_labels.byte()).long()
         train_mask = ~test_labels.byte()

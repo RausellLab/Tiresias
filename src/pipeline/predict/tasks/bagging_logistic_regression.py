@@ -3,9 +3,8 @@ import mlflow
 import torch
 from src.models import Bagging
 from src.models import LogisticRegression
-from src.evaluation import test
+from src.evaluation import predict
 from src.utils import data_loaders
-from src.utils import data_savers
 from src.utils import mlflow as u_mlflow
 
 
@@ -23,7 +22,7 @@ def bagging_logistic_regression(
     params,
     metadata,
 ):
-    mlflow.set_experiment("Test")
+    mlflow.set_experiment("Predict")
 
     with mlflow.start_run(run_name=RUN_NAME):
         mlflow.log_param("model", MODEL_NAME)
@@ -37,9 +36,6 @@ def bagging_logistic_regression(
         )
         test_labels = data_loaders.load_labels(test_node_labels_file, use_cuda=use_cuda)
         labels = (train_labels.byte() | test_labels.byte()).long()
-        train_mask = ~test_labels.byte()
-
-        n_nodes = labels.size(0)
 
         embeddings = None
         node_features = None
@@ -70,13 +66,12 @@ def bagging_logistic_regression(
             in_features = node_features
 
         print(RUN_NAME)
-        ranks_df = test.run(
+        ranks_df = predict.run(
             labels=labels,
-            train_mask=train_mask,
             model_class=Bagging,
             bagging_model=LogisticRegression,
             features=in_features,
             **params
         )
 
-        data_savers.save_ranks(ranks_df, n_nodes, RUN_NAME, params)
+        u_mlflow.log_dataframe(ranks_df, "predictions", "results")

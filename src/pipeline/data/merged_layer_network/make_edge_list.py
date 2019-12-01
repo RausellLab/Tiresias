@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from os import path
 from src import config
 from src.config import artifact_stores
@@ -17,7 +15,7 @@ def main():
     container = artifact_stores.edge_lists.create_artifact_container()
     container.save_params(
         source_files=[path.basename(f) for f in config.edge_lists_files],
-        merged_layers=True
+        merged_layers=True,
     )
     outfile = container.create_artifact_filepath(OUTFILE_NAME)
 

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import ray
 import mlflow
 import torch
@@ -17,12 +15,7 @@ MODEL_NAME = "bagging-logistic-regression"
 
 @ray.remote(num_gpus=1)
 def bagging_logistic_regression(
-    embeddings_file,
-    node_labels_file,
-    node_features_file,
-    use_cuda,
-    params,
-    metadata
+    embeddings_file, node_labels_file, node_features_file, use_cuda, params, metadata
 ):
     mlflow.set_experiment("LOOCV")
 
@@ -42,14 +35,18 @@ def bagging_logistic_regression(
         if embeddings_file is not None:
             mlflow.log_param("embeddings", True)
             mlflow.log_artifact(embeddings_file, "inputs")
-            embeddings = data_loaders.load_embeddings(embeddings_file, use_cuda=use_cuda)
+            embeddings = data_loaders.load_embeddings(
+                embeddings_file, use_cuda=use_cuda
+            )
         else:
             mlflow.log_param("embeddings", False)
 
         if node_features_file is not None:
             mlflow.log_param("node_features", True)
             mlflow.log_artifact(node_features_file, "inputs")
-            node_features = data_loaders.load_node_features(node_features_file, use_cuda)
+            node_features = data_loaders.load_node_features(
+                node_features_file, use_cuda
+            )
         else:
             mlflow.log_param("node_features", False)
 

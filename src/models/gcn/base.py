@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from abc import ABC, abstractmethod
 import torch
 from torch import nn
@@ -9,8 +7,7 @@ import mlflow
 
 
 class BaseGCN(nn.Module, ABC):
-    """
-    Base model for GCN and RGCN.
+    """Base model for GCN and RGCN.
 
     Parameters
     ----------
@@ -65,7 +62,9 @@ class BaseGCN(nn.Module, ABC):
         self.lr = lr
         self.weight_decay = weight_decay
 
-        n_in_feats = features.size(1) if features is not None else graph.number_of_nodes()
+        n_in_feats = (
+            features.size(1) if features is not None else graph.number_of_nodes()
+        )
         n_classes = 2
 
         self.layers = nn.ModuleList()
@@ -114,8 +113,7 @@ class BaseGCN(nn.Module, ABC):
         )
 
     def forward(self, x):
-        """
-        Defines how the model is run, from input to output.
+        """Defines how the model is run, from input to output.
 
         Parameters
         ----------
@@ -133,15 +131,12 @@ class BaseGCN(nn.Module, ABC):
         return h
 
     def reset_parameters(self):
-        """
-        Reset the parameters (weights) of the layers of the model.
-        """
+        """Reset the parameters (weights) of the layers of the model."""
         for layer in self.layers:
             layer.reset_parameters()
 
     def fit(self, train_labels, train_mask):
-        """
-        Trains the model.
+        """Trains the model.
 
         Parameters
         ----------
@@ -153,7 +148,9 @@ class BaseGCN(nn.Module, ABC):
             Boolean mask of size n_nodes indicating the nodes used in training.
         """
         loss_criterion = nn.CrossEntropyLoss()
-        optimizer = optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+        optimizer = optim.Adam(
+            self.parameters(), lr=self.lr, weight_decay=self.weight_decay
+        )
 
         self.train()
         for epoch in range(1, self.epochs + 1):
@@ -170,8 +167,7 @@ class BaseGCN(nn.Module, ABC):
             print(f"Epoch: {epoch}/{self.epochs} | Loss {loss.item():.5f}")
 
     def predict_proba(self):
-        """
-        Outputs probabilities.
+        """Outputs probabilities.
 
         Parameters
         ----------
@@ -189,8 +185,7 @@ class BaseGCN(nn.Module, ABC):
 
 
 class BaseGCNLayer(nn.Module, ABC):
-    """
-    Base class for GCNLayer and RGCNLayer.
+    """Base class for GCNLayer and RGCNLayer.
 
     Parameters
     ----------

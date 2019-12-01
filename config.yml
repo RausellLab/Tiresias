@@ -1,8 +1,8 @@
 # Configure system resources
 system:
-  cpus: 16
-  gpus: 0
-  memory: 32 # in GB
+  cpus: 4
+  gpus: 1
+  memory: 8 # in GB
 
 # Set input datasets
 data:

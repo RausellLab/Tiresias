@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import torch
 from src.utils.misc import random_choice
 
@@ -52,7 +50,9 @@ class Bagging:
             )
 
             # Generate train mask from indices
-            bootstrap_train_mask = torch.zeros(n_nodes, dtype=torch.uint8, device=device)
+            bootstrap_train_mask = torch.zeros(
+                n_nodes, dtype=torch.uint8, device=device
+            )
             bootstrap_train_mask[bootstrap_train_instances_idx] = 1
 
             # Reset model parameters
@@ -61,7 +61,7 @@ class Bagging:
             # Train model with current bootstrap
             self.model.fit(
                 train_labels=labels[bootstrap_train_mask],
-                train_mask=bootstrap_train_mask
+                train_mask=bootstrap_train_mask,
             )
 
             # Predict with current bootstrap

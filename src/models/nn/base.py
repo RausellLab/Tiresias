@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from abc import ABC
 from abc import abstractmethod
 import torch
@@ -10,8 +8,8 @@ import mlflow
 
 
 class BaseNN(nn.Module, ABC):
-    """
-    Base class for classifiers such as Multilayer Perceptron and Logistic Regression.
+    """Base class for classifiers such as Multilayer Perceptron and Logistic
+    Regression.
 
     Parameters
     ----------
@@ -24,6 +22,7 @@ class BaseNN(nn.Module, ABC):
     lr: float
         Learning rate used to train the model.
     """
+
     def __init__(self, features, epochs=1, lr=0.01):
         super().__init__()
         self.features = features
@@ -35,8 +34,7 @@ class BaseNN(nn.Module, ABC):
         raise NotImplementedError("Subclasses must override reset_parameters!")
 
     def fit(self, train_labels, train_mask):
-        """
-        Trains the model.
+        """Trains the model.
 
         Parameters
         ----------
@@ -66,14 +64,14 @@ class BaseNN(nn.Module, ABC):
             print(f"Epoch: {epoch}/{self.epochs} | Loss {loss.item():.5f}")
 
     def predict_proba(self):
-        """
-        For each data sample, outputs the probability that it belongs to the positive class.
+        """For each data sample, outputs the probability that it belongs to the
+        positive class.
 
         Returns
         -------
         pos_class_proba: torch.FloatTensor
-            A 1-D tensor in which the i-th component holds the probability that the i-th data sample belong to the
-            positive class.
+            A 1-D tensor in which the i-th component holds the probability that the i-th
+            data sample belong to the positive class.
         """
         self.eval()
         with torch.no_grad():

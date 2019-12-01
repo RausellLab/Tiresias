@@ -1,9 +1,6 @@
-# coding: utf-8
-
 import mlflow
 import torch
 import ray
-from src import config
 from src.models.propagation.rwr_m import RwrM
 from src.evaluation import test
 from src.utils import data_loaders
@@ -15,12 +12,12 @@ RUN_NAME = "RWR-M"
 
 @ray.remote(num_gpus=1)
 def rwr_m(
-        adj_matrix_files,
-        train_node_labels_file,
-        test_node_labels_file,
-        use_cuda,
-        params,
-        metadata
+    adj_matrix_files,
+    train_node_labels_file,
+    test_node_labels_file,
+    use_cuda,
+    params,
+    metadata,
 ):
     mlflow.set_experiment("Test")
 
@@ -29,7 +26,9 @@ def rwr_m(
         u_mlflow.add_metadata(metadata)
         mlflow.set_tag("use_cuda", use_cuda)
 
-        train_labels = data_loaders.load_labels(train_node_labels_file, use_cuda=use_cuda)
+        train_labels = data_loaders.load_labels(
+            train_node_labels_file, use_cuda=use_cuda
+        )
         test_labels = data_loaders.load_labels(test_node_labels_file, use_cuda=use_cuda)
         labels = (train_labels.byte() | test_labels.byte()).long()
         train_mask = ~test_labels.byte()
@@ -37,9 +36,7 @@ def rwr_m(
 
         print("Loading adjacency matrices")
         adj_matrices = data_loaders.load_adj_matrices(
-            adj_matrix_files,
-            normalization=None,
-            use_cuda=use_cuda
+            adj_matrix_files, normalization=None, use_cuda=use_cuda
         )
 
         adjacency_matrices = torch.stack(adj_matrices)

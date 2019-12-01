@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from scipy import sparse
 from os import path
 from src import config
@@ -23,13 +21,15 @@ def main():
         src=merged_edge_lists_df["src"].values,
         dst=merged_edge_lists_df["dst"].values,
         weights=merged_edge_lists_df["weight"].values,
-        dim=n_nodes
+        dim=n_nodes,
     )
 
-    container = artifact_stores.adjacency_matrices.merged_layer.create_artifact_container()
+    container = (
+        artifact_stores.adjacency_matrices.merged_layer.create_artifact_container()
+    )
     container.save_params(
         source_files=[path.basename(f) for f in config.edge_lists_files],
-        merged_layers=True
+        merged_layers=True,
     )
     outfile = container.create_artifact_filepath(OUTFILE_NAME)
 

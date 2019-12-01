@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import os
 import json
 from uuid import uuid4
@@ -43,5 +41,7 @@ def iter_artifact_dir(directory):
 
 
 if __name__ == "__main__":
-    for x, y in iter_artifact_dir("/home/cbl05/workspace/tiresias/data/interim/adjacency_matrices/multi_layer"):
+    for x, y in iter_artifact_dir(
+        "/home/cbl05/workspace/tiresias/data/interim/adjacency_matrices/multi_layer"
+    ):
         print(x, y)

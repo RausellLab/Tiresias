@@ -1,11 +1,8 @@
-# coding: utf-8
-
 from scipy import sparse
 
 
 def adj_matrix_to_edge_list(A):
-    """
-    Converts an adjacency matrix to an edge list.
+    """Converts an adjacency matrix to an edge list.
 
     Parameters
     ----------
@@ -30,8 +27,7 @@ def adj_matrix_to_edge_list(A):
 
 
 def edge_list_to_adj_matrix(src, dst, weights, dim, dense=False):
-    """
-    Converts an edge list to an adjacency matrix.
+    """Converts an edge list to an adjacency matrix.
 
     Parameters
     ----------

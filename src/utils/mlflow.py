@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import mlflow
 import tempfile
 import numpy as np
@@ -7,8 +5,7 @@ import pandas as pd
 
 
 def add_artifacts(*args):
-    """
-    Log multiple local files as artifacts of the currently active run.
+    """Log multiple local files as artifacts of the currently active run.
 
     Parameters
     ----------
@@ -20,8 +17,7 @@ def add_artifacts(*args):
 
 
 def add_params(**kwargs):
-    """
-    Log multiple parameters under the current run.
+    """Log multiple parameters under the current run.
 
     Parameters
     ----------
@@ -51,11 +47,9 @@ def log_fig(fig, filename, directory=None):
 
 
 def flatten_dict(data):
-    df = pd.io.json.json_normalize(data, sep='_')
+    df = pd.io.json.json_normalize(data, sep="_")
     return df.to_dict(orient="records")[0]
 
 
 def add_metadata(metadata):
-    add_params(
-        **flatten_dict(metadata)
-    )
+    add_params(**flatten_dict(metadata))

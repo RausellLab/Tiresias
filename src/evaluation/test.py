@@ -1,13 +1,10 @@
-# coding: utf-8
-
 import torch
 import pandas as pd
 import numpy as np
 
 
 def run(labels, train_mask, model_class, **kwargs):
-    """
-    Run test.
+    """Run test.
 
     Parameters
     ----------
@@ -90,7 +87,8 @@ def run(labels, train_mask, model_class, **kwargs):
         # Compute gene ranks according to predictions
         predictions_df["rank"] = predictions_df.rank(
             ascending=False,
-            method="max",  # Equal values are assigned the highest rank in the group i.e. the worst.
+            # Equal values are assigned the highest rank in the group i.e. the worst.
+            method="max",
         )
 
         # Add rank of current gene to dataframe
