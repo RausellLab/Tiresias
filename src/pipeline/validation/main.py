@@ -30,7 +30,7 @@ def main():
     ray.init(
         num_cpus=config.cpus,
         num_gpus=config.gpus,
-        resources={"memory": config.memory},
+        memory=config.memory * 1e9,
         temp_dir=config.temp_dir,
     )
 
