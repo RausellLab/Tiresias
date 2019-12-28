@@ -10,3 +10,6 @@ artifacts/
 
 # Temporary files
 tmp/
+
+# Reports
+reports/
