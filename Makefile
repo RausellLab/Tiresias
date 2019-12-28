@@ -25,19 +25,35 @@ embeddings:	## Generate vector embeddings of the nodes.
 .PHONY: validation
 validation:	## Run the validation step of the pipeline.
 	python -m src.pipeline.validation.main
+	$(MAKE) validation-best-runs-report
 
 .PHONY: test
 test:	## Run the test step of the pipeline.
 	python -m src.pipeline.test.main
+	$(MAKE) test-best-runs-report
 
 .PHONY: predict
 predict:	## Run the prediction step of the pipeline.
 	python -m src.pipeline.predict.main
 	$(MAKE) prediction-report
 
+.PHONY: validation-best-runs-report
+validation-best-runs-report:	## Generate a report of the best runs for the validation step.
+	python -m src.reports.best_runs_by_model validation
+
+.PHONY: test-best-runs-report
+test-best-runs-report:	## Generate a report of the best runs for the test step.
+	python -m src.reports.best_runs_by_model test
+
 .PHONY: prediction-report
 prediction-report:	## Generate a report of the predictions. The report is available in reports/.
 	python -m src.reports.predictions
+
+.PHONY: reports
+reports:	## Generate all reports.
+	$(MAKE) validation-best-runs-report
+	$(MAKE) test-best-runs-report
+	$(MAKE) prediction-report
 
 .PHONY: pipeline
 pipeline:	## Run the whole pipeline.

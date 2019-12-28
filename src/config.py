@@ -1,3 +1,4 @@
+import os
 from os import path
 import yaml
 import json
@@ -64,5 +65,9 @@ artifact_stores = SimpleNamespace(
     random_walks=ArtifactStore(path.join(root_dir, "artifacts", "random_walks")),
     embeddings=ArtifactStore(path.join(root_dir, "artifacts", "embeddings")),
 )
+
+REPORTS_DIR = path.join(root_dir, "reports")
+if not path.exists(REPORTS_DIR):
+    os.makedirs(REPORTS_DIR)
 
 NODE2VEC_DOCKER_IMAGE = "thibaudma/node2vec"

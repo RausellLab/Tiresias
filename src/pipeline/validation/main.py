@@ -188,7 +188,7 @@ def main():
                 embeddings_file = embeddings_files[0]
 
                 metadata = {
-                    "edge_lists": metadata_embed,
+                    "embeddings": metadata_embed,
                     "adjacency_matrices": metadata_adj,
                 }
 
