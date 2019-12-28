@@ -9,6 +9,7 @@ from src.utils import mlflow as u_mlflow
 
 def net_prop_with_restart(
     run_name,
+    model_name,
     normalization,
     adj_matrix_file,
     node_labels_file,
@@ -22,7 +23,7 @@ def net_prop_with_restart(
         u_mlflow.add_params(**params)
         u_mlflow.add_metadata(metadata)
 
-        mlflow.log_param("model", "rwr")
+        mlflow.log_param("model", model_name)
         mlflow.set_tag("use_cuda", use_cuda)
         mlflow.log_param("merged_layers", True)
 
@@ -48,6 +49,7 @@ def net_prop_with_restart(
 def rwr(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
     net_prop_with_restart(
         "Random walk with restart",
+        "rwr",
         "rw",
         adj_matrix_file,
         node_labels_file,
@@ -61,6 +63,7 @@ def rwr(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
 def label_spreading(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
     net_prop_with_restart(
         "Label Spreading",
+        "label-spreading",
         "sym",
         adj_matrix_file,
         node_labels_file,

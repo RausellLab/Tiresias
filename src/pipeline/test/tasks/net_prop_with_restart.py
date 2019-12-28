@@ -9,6 +9,7 @@ from src.utils import mlflow as u_mlflow
 
 def net_prop_with_restart(
     run_name,
+    model_name,
     normalization,
     adj_matrix_file,
     train_node_labels_file,
@@ -23,7 +24,7 @@ def net_prop_with_restart(
         u_mlflow.add_params(**params)
         u_mlflow.add_metadata(metadata)
 
-        mlflow.log_param("model", "rwr")
+        mlflow.log_param("model", model_name)
         mlflow.set_tag("use_cuda", use_cuda)
 
         train_labels = data_loaders.load_labels(
@@ -61,6 +62,7 @@ def rwr(
 ):
     net_prop_with_restart(
         "Random walk with restart",
+        "rwr",
         "rw",
         adj_matrix_file,
         train_node_labels_file,
@@ -82,6 +84,7 @@ def label_spreading(
 ):
     net_prop_with_restart(
         "Label Spreading",
+        "label-spreading",
         "sym",
         adj_matrix_file,
         train_node_labels_file,
