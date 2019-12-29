@@ -14,9 +14,9 @@ dependencies:
   - pytorch::pytorch=1.1.0
   - pytorch::torchvision=0.3.0
   - dglteam::dgl=0.2
-  - networkx=2.2
   - pip=19.2.3
   - pip:
+      - networkx==2.4
       - mlflow==1.5.0
       - ray==0.7.6
       - setproctitle==1.1.10
