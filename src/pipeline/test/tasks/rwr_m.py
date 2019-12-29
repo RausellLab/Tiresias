@@ -8,6 +8,7 @@ from src.utils import data_savers
 from src.utils import mlflow as u_mlflow
 
 RUN_NAME = "RWR-M"
+MODEL_NAME = "bagging-gcn"
 
 
 @ray.remote(num_gpus=1)
@@ -22,6 +23,8 @@ def rwr_m(
     mlflow.set_experiment("Test")
 
     with mlflow.start_run(run_name=RUN_NAME):
+        mlflow.log_param("model", MODEL_NAME)
+
         u_mlflow.add_params(**params)
         u_mlflow.add_metadata(metadata)
         mlflow.set_tag("use_cuda", use_cuda)

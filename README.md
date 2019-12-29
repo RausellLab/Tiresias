@@ -72,7 +72,7 @@ Set up the parameters used for featurization and for running the models by modif
 * `parameters/features.json`: contains the parameters used to run random walks and to create node embeddings.
 * `parameters/models_validation.json`: contains model parameters used during the **validation** stage.
 * `parameters/models_test.json`: contains model parameters used during the **test** stage.
-Note that those parameters are also used for outputting a final ranking of potential disease genes during the **predict** stage.
+Note that those parameters are also used for outputting a final ranking of the nodes during the **predict** stage.
 
 3. System and models
 
@@ -134,6 +134,11 @@ mlflow ui
 ````
 
 Then, go to [http://localhost:5000/](http://localhost:5000/) in your web browser.
+
+### Reports
+
+At the *validation*, *test* and *prediction* steps of the pipeline, reports containing
+recaps of the results are generated. The report files are available in `reports/`.
 
 ### Intermediary files
 

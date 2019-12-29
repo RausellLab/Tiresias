@@ -25,7 +25,6 @@ def bagging_rgcn_embeddings(
         u_mlflow.add_params(**params)
         u_mlflow.add_metadata(metadata)
         mlflow.set_tag("use_cuda", use_cuda)
-        mlflow.log_param("merged_layers", len(adj_matrix_files) == 1)
 
         labels = data_loaders.load_labels(node_labels_file, use_cuda=use_cuda)
         n_nodes = labels.size(0)
