@@ -9,7 +9,7 @@ from src.artifacts import ArtifactStore
 
 root_dir = path.abspath(path.join(path.dirname(__file__), ".."))
 
-temp_dir = path.join(root_dir, "tmp", "ray")
+temp_dir = path.join(os.sep, "tmp", "tiresias", "ray")
 
 with open(path.join(root_dir, "config.yml"), "r") as stream:
     yaml_config = yaml.safe_load(stream)

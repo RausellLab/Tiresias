@@ -1,5 +1,7 @@
 SHELL := /bin/bash
 
+RAY_TMP := /tmp/tiresias/ray
+
 .PHONY: data-multi-layer
 data-multi-layer:	## Preprocess the input data for the multi-layer network.
 	python -m src.pipeline.data.multi_layer_network.make_adjacency_matrices
@@ -63,13 +65,13 @@ pipeline:	## Run the whole pipeline.
 CLEAN_INTERM_MSG := "WARNING: This will erase intermediary directories (artifacts/ and tmp/). Continue? (Y/N): "
 clean-interm:	## Erase intermediary directories artifacts/ and tmp/.
 	@read -p $(CLEAN_INTERM_MSG) confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || exit 1
-	rm -rf artifacts/ tmp/
+	rm -rf artifacts/ $(RAY_TMP)
 
 .PHONY: clean-all
 CLEAN_ALL_MSG := "WARNING: This will erase ALL generated files. Continue? (Y/N): "
 clean-all:	## Erase ALL generated files.
 	@read -p $(CLEAN_ALL_MSG) confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || exit 1
-	rm -rf artifacts/ tmp/ mlruns/ reports/
+	rm -rf artifacts/ $(RAY_TMP) mlruns/ reports/
 
 .PHONY: node2vec-image
 node2vec-image:	## Pull node2vec image from the Docker registry.
