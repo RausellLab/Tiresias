@@ -13,3 +13,4 @@ tmp/
 
 # Reports
 reports/
+!src/reports/
