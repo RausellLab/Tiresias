@@ -8,7 +8,7 @@ from src.utils import data_savers
 from src.utils import mlflow as u_mlflow
 
 RUN_NAME = "RWR-M"
-MODEL_NAME = "bagging-gcn"
+MODEL_NAME = "rwr-m"
 
 
 @ray.remote(num_gpus=1)
