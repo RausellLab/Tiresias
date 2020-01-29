@@ -25,8 +25,8 @@ test_node_labels_file = yaml_config["data"]["test_node_labels"]
 
 
 #Input processed files
-node_attributes_file_processed = yaml_config["data"]["train_node_labels"].replace(".tsv", "_preprocessed.tsv")
-node_attributes_file_processed = yaml_config["data"]["test_node_labels"].replace(".tsv", "_preprocessed.tsv")
+train_node_labels_file_processed = yaml_config["data"]["train_node_labels"].replace(".tsv", "_preprocessed.tsv")
+test_node_labels_file_processed = yaml_config["data"]["test_node_labels"].replace(".tsv", "_preprocessed.tsv")
 
 # Enabled models
 models = yaml_config["models"]
