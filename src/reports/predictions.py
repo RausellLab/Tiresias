@@ -49,18 +49,25 @@ def main():
     prediction_df = pd.concat(predictions_dfs, axis=1)
     prediction_df.sort_values(by="node", inplace=True)
 
+    #Rename nodes taking the indexes reference
+    index_reference_path = path.join(path.split(config.train_node_labels_file)[0],"reference_index.tsv")
+    index_reference = pd.read_csv(index_reference_path, sep = "\t", index_col=[0])
+    new_index = index_reference["node"].values[prediction_df.index.values]
+    prediction_df_reindex = prediction_df.set_index(new_index)
+    prediction_df_reindex.index.name = "node"
+
     # Save tsv file
     out_tsv_file = path.join(config.REPORTS_DIR, f"predictions.tsv")
     print(f"Saving {out_tsv_file}...")
-    prediction_df.to_csv(out_tsv_file, sep="\t")
+    prediction_df_reindex.to_csv(out_tsv_file, sep="\t")
 
     # Create heatmap
     sns.set(font_scale=1.5)
     fig, ax = plt.subplots(
-        figsize=(0.7 * prediction_df.shape[1], 0.5 * prediction_df.shape[0])
+        figsize=(0.7 * prediction_df_reindex.shape[1], 0.5 * prediction_df_reindex.shape[0])
     )
     fig.suptitle("Predicted rank for each node by model.")
-    sns.heatmap(prediction_df.T, annot=True, cbar=False, ax=ax)
+    sns.heatmap(prediction_df_reindex.T, annot=True, cbar=False, ax=ax)
 
     # Save heatmap
     out_png_file = path.join(config.REPORTS_DIR, f"predictions_heatmap.png")

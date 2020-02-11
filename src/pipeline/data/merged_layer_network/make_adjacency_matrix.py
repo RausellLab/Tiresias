@@ -10,11 +10,11 @@ OUTFILE_NAME = "adjacency_matrix.npz"
 
 
 def main():
-    node_labels = io.read_node_labels(config.train_node_labels_file)
+    node_labels = io.read_node_labels(config.train_node_labels_file_processed)
     n_nodes = node_labels["node"].size
 
     merged_edge_lists_df = merge_edge_lists(
-        (io.read_edge_list(f) for f in config.edge_lists_files)
+        (io.read_edge_list(f) for f in config.edge_lists_files_processed)
     )
 
     adj_matrix = edge_list_to_adj_matrix(
@@ -28,7 +28,7 @@ def main():
         artifact_stores.adjacency_matrices.merged_layer.create_artifact_container()
     )
     container.save_params(
-        source_files=[path.basename(f) for f in config.edge_lists_files],
+        source_files=[path.basename(f) for f in config.edge_lists_files_processed],
         merged_layers=True,
     )
     outfile = container.create_artifact_filepath(OUTFILE_NAME)

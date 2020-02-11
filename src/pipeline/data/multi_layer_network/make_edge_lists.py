@@ -7,11 +7,11 @@ from src.utils import io
 def main():
     container = artifact_stores.edge_lists.create_artifact_container()
     container.save_params(
-        source_files=[path.basename(f) for f in config.edge_lists_files],
+        source_files=[path.basename(f) for f in config.edge_lists_files_processed],
         merged_layers=False,
     )
 
-    for index, file in enumerate(config.edge_lists_files):
+    for index, file in enumerate(config.edge_lists_files_processed):
         edge_list_df = io.read_edge_list(file)
 
         outfile = container.create_artifact_filepath(f"edge_list_{index}.tsv")

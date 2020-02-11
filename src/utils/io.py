@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import os
 
 def read_node_labels(file):
     return pd.read_csv(
@@ -88,5 +88,15 @@ def read_embeddings(input_file):
     return df
 
 
-def read_node_attributes(file):
-    return pd.read_csv(file, sep="\t", index_col=[0], dtype=float)
+def read_node_attributes(file, nodes_as_index=True):
+    return pd.read_csv(file, sep="\t", index_col=[0], dtype=float) if nodes_as_index else pd.read_csv(file, sep="\t", dtype=float)
+
+
+
+def write_processed_df(processed_df, filepath):
+    #To make sure that in node_attributes_processed file we will find any nodes with float
+    processed_df.to_csv(filepath.replace(".tsv", "_processed.tsv"),sep = "\t" , index = False)
+
+def write_reference_df(reference_df, path):
+    reference_df.to_csv(os.path.join(path, "reference_index.tsv"),sep = "\t" , index = True, header=True)
+

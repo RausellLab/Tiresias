@@ -24,9 +24,7 @@ train_node_labels_file = yaml_config["data"]["train_node_labels"]
 test_node_labels_file = yaml_config["data"]["test_node_labels"]
 
 
-#Input processed files
-train_node_labels_file_processed = yaml_config["data"]["train_node_labels"].replace(".tsv", "_preprocessed.tsv")
-test_node_labels_file_processed = yaml_config["data"]["test_node_labels"].replace(".tsv", "_preprocessed.tsv")
+
 
 # Enabled models
 models = yaml_config["models"]
@@ -45,6 +43,14 @@ if not path.isabs(train_node_labels_file):
 
 if not path.isabs(train_node_labels_file):
     test_node_labels_file = path.join(root_dir, test_node_labels_file)
+
+
+#Input processed files
+train_node_labels_file_processed = train_node_labels_file.replace(".tsv", "_processed.tsv")
+test_node_labels_file_processed = test_node_labels_file.replace(".tsv", "_processed.tsv")
+edge_lists_files_processed = [f.replace(".tsv", "_processed.tsv") for f in edge_lists_files]
+node_attributes_file_processed = node_attributes_file.replace(".tsv", "_processed.tsv")
+
 
 parameters = dict()
 

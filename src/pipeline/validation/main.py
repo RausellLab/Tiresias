@@ -35,8 +35,8 @@ def main():
     )
 
     results = []
-    node_labels_file = config.train_node_labels_file
-    node_attributes_file = config.node_attributes_file
+    node_labels_file = config.train_node_labels_file_processed
+    node_attributes_file = config.node_attributes_file_processed
 
     for (
         adjacency_matrix_files,

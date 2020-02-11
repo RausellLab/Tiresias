@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 
 def merge_edge_lists(edge_list_dfs):
     """Merge edge lists. Weights of overlapping edges are summed.
@@ -19,3 +19,70 @@ def merge_edge_lists(edge_list_dfs):
     ].sum()
 
     return concat_edge_list_df
+
+def unique_nodes_from_edgelist(edge_list_df):
+    unique = pd.unique(pd.concat([edge_list_df['src'], edge_list_df['dst']], axis = 0))
+    unique_sorted = np.sort(unique)
+    unique_df = pd.DataFrame(data=unique_sorted, columns = ['node'])
+    return unique_df
+
+
+
+def label_process(unique_nodes, labels_df):
+    """returns a datframe with the nodes in labels lists that are inside our graphs
+
+    Parameters
+    ----------
+    unique_nodes: a DataFrame
+        The DataFrame containing the sorted and unique edge list.
+    labels_df: a DataFrame
+        The DataFrame containing node and labels.
+    """
+    return labels_df.loc[labels_df['node'].isin(unique_nodes)]
+
+def reindex_labels_df_process(labels_df):
+    """
+    Takes node_labels pd.Dataframe and rename the nodes by his indexes.
+    """
+    labels_df_reindex = labels_df.reset_index(drop=True)
+    labels_df_reindex['node'] = labels_df_reindex.index.to_numpy()
+    return labels_df_reindex
+
+def reindex_edgelist_df_process(edge_list_df, index_reference):
+    """
+    Takes a labels_dataframe of labels and a the reference of the index and returns the labels_dataframe with 
+    the reindexing
+    """
+    for columname in ['src','dst']:
+        edge_list_df[columname] = column_reindexing(edge_list_df[columname], index_reference)
+            
+    return edge_list_df
+
+def column_reindexing(node_column, reference_column):
+    """ 
+    Takes pd series of columns and a pd series of reference indexing(nodes sorted (index inside))
+    Change the id of the values in pandas_columns to the correspondent index in the reference dataframe. 
+    Return the pd.Series of the with the reindexed(renamed nodes).
+    Parameters
+    ----------
+    node_column: Pandas series 
+        The Column containing the nodes to rename.
+    reference_column: 
+        The column of indexed nodes. Reference for the change.
+    """ 
+    column = node_column.values.tolist()
+    reference = reference_column.tolist()
+    return pd.Series(data = [reference.index(x) for x in column], dtype=np.int64, name = node_column.name)
+
+def column_reindexing_back(node_column, referencecolumn):
+    """ 
+    Takes pd series of columns and a pd series of reference indexing(nodes sorted (index inside))
+    Change the id of the values in node_column to the correspondent value for that index in the reference dataframe. 
+    Return the pd.Series of the with the reindexed(renamed nodes).
+    Parameters
+    ----------
+    node_column: Pandas series 
+        The Column containing the nodes to rename.
+    reference_column: 
+        The column of i
+    """
