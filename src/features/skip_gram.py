@@ -32,10 +32,12 @@ def run(
     """
 
     walks = np.concatenate([io.read_random_walks(file) for file in random_walk_files])
-    walks = walks.astype(str).tolist()
-
+    #print(walks.shape)
+    walks_trim = np.split(walks, walks.shape[0])
+    walks_trim = [walk[walk!=0].astype(str).tolist() for walk in walks]
+    #print(walks_trim)
     model = Word2Vec(
-        walks,
+        walks_trim,
         size=dimensions,
         window=context_size,
         min_count=0,
