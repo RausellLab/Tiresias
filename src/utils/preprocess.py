@@ -74,15 +74,3 @@ def column_reindexing(node_column, reference_column):
     reference = reference_column.tolist()
     return pd.Series(data = [reference.index(x) for x in column], dtype=np.int64, name = node_column.name)
 
-def column_reindexing_back(node_column, referencecolumn):
-    """ 
-    Takes pd series of columns and a pd series of reference indexing(nodes sorted (index inside))
-    Change the id of the values in node_column to the correspondent value for that index in the reference dataframe. 
-    Return the pd.Series of the with the reindexed(renamed nodes).
-    Parameters
-    ----------
-    node_column: Pandas series 
-        The Column containing the nodes to rename.
-    reference_column: 
-        The column of i
-    """
