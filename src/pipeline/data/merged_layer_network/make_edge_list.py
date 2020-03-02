@@ -18,7 +18,8 @@ def main():
         merged_layers=True,
     )
     outfile = container.create_artifact_filepath(OUTFILE_NAME)
-
+    # Write SNAP compatible edge list, edgelist will be 0 based
+    merged_edge_lists_df.iloc[:, 0:2] += 1
     merged_edge_lists_df.to_csv(outfile, sep=" ", header=False, index=False)
 
 
