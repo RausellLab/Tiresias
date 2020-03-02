@@ -32,8 +32,9 @@ def main():
         num_gpus=config.gpus,
         memory=config.memory * 1e9,
         temp_dir=config.temp_dir,
+        local_mode=True
     )
-
+    
     results = []
     node_labels_file = config.train_node_labels_file_processed
     node_attributes_file = config.node_attributes_file_processed
