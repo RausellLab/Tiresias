@@ -2,6 +2,10 @@ SHELL := /bin/bash
 
 RAY_TMP := /tmp/tiresias/ray
 
+.PHONY: data-processing
+data-processing:	## Preprocess the input data labels.
+	python -m src.pipeline.data.data_processing
+
 .PHONY: data-multi-layer
 data-multi-layer:	## Preprocess the input data for the multi-layer network.
 	python -m src.pipeline.data.multi_layer_network.make_adjacency_matrices
@@ -14,7 +18,7 @@ data-merged-layer:	## Merge network layers and preprocess the resulting data.
 
 .PHONY: data
 data:	## Preprocess the input data.
-	$(MAKE) data-multi-layer data-merged-layer
+	$(MAKE) data-processing data-multi-layer data-merged-layer
 
 .PHONY: random-walks
 random-walks:	## Simulate random walks on the networks.
