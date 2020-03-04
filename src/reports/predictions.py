@@ -53,13 +53,11 @@ def main():
     index_reference_path = path.join(path.split(config.train_node_labels_file)[0],"reference_index.tsv")
     index_reference = pd.read_csv(index_reference_path, sep = "\t", index_col=[0])
     new_index = index_reference["node"].values[prediction_df.index.values]
+    #Taking the list of gene_symbols
+    gene_symbol = index_reference["Gene"].values[prediction_df.index.values]
+
     prediction_df_reindex = prediction_df.set_index(new_index)
     prediction_df_reindex.index.name = "node"
-
-    # Save tsv file
-    out_tsv_file = path.join(config.REPORTS_DIR, f"predictions.tsv")
-    print(f"Saving {out_tsv_file}...")
-    prediction_df_reindex.to_csv(out_tsv_file, sep="\t")
 
     # Create heatmap
     sns.set(font_scale=1.5)
@@ -74,6 +72,15 @@ def main():
     print(f"Saving {out_png_file}...")
     fig.savefig(out_png_file, bbox_inches="tight", dpi=150)
 
+
+
+    #Annotating predictions with gene_symbols
+
+    prediction_df_reindex.insert(loc=0, column='Gene_symbols', value=gene_symbol)
+    # Save tsv file
+    out_tsv_file = path.join(config.REPORTS_DIR, f"predictions.tsv")
+    print(f"Saving {out_tsv_file}...")
+    prediction_df_reindex.to_csv(out_tsv_file, sep="\t")
 
 if __name__ == "__main__":
     print(

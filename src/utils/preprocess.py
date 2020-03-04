@@ -26,7 +26,17 @@ def unique_nodes_from_edgelist(edge_list_df):
     unique_df = pd.DataFrame(data=unique_sorted, columns = ['node'])
     return unique_df
 
-
+def reference_annotation(reference_df, annotated_df):
+    """Return the annotated reference dataframe, given a previous annotated df with a column called gene(which will contain the ensemblID)
+    Parameters
+    ----------
+    reference_df: a DataFrame
+        The DataFrame containing the sorted and unique edge list, wich index is will be the name of the nodes, column called node
+    annotated_df: a DataFrame
+        The DataFrame containing a column called Gene_ID that contains the names of nodes and the respective annotation in another columns.
+    """
+    reference_annotated_df = pd.merge(reference_df, annotated_df, left_on = 'node', right_on = 'Gene_ID', how = 'left')
+    return reference_annotated_df.drop(['Gene_ID'], axis = 1)
 
 def label_process(unique_nodes, labels_df):
     """returns a datframe with the nodes in labels lists that are inside our graphs
@@ -40,13 +50,29 @@ def label_process(unique_nodes, labels_df):
     """
     return labels_df.loc[labels_df['node'].isin(unique_nodes)]
 
-def reindex_labels_df_process(labels_df):
+def label_df_generation(reference_df, label_df):
+    """Return a dataframe with all of values present in node columns in reference and 
+    Parameters
+    ----------
+    reference_df: a DataFrame
+        The DataFrame containing the sorted and unique edge list, wich index is will be the name of the nodes.
+    labels_df: a DataFrame
+        The DataFrame containing only node names.
+    """
+    label_df_processed = reference_df
+    label_df_processed["label"] = 0
+    print(label_df_processed)
+    label_df_processed.loc[reference_df["node"].isin(label_df['node']),'label'] = 1
+    print(label_df_processed)
+    return label_df_processed
+
+def reindex_labels_df_process(node_labels_df):
     """
     Takes node_labels pd.Dataframe and rename the nodes by his indexes.
     """
-    labels_df_reindex = labels_df.reset_index(drop=True)
-    labels_df_reindex['node'] = labels_df_reindex.index.to_numpy()
-    return labels_df_reindex
+    node_labels_df_processed = node_labels_df.copy()
+    node_labels_df_processed['node'] = node_labels_df_processed.index.to_numpy()
+    return node_labels_df_processed
 
 def reindex_edgelist_df_process(edge_list_df, index_reference):
     """
@@ -57,6 +83,15 @@ def reindex_edgelist_df_process(edge_list_df, index_reference):
         edge_list_df[columname] = column_reindexing(edge_list_df[columname], index_reference)
             
     return edge_list_df
+
+def reindex_nodeatt_df_process(nodeatt_df, index_reference):
+    """
+    Takes a labels_dataframe of labels and a the reference of the index and returns the labels_dataframe with 
+    the reindexing
+    """
+    
+    nodeatt_df['node'] = column_reindexing(nodeatt_df['node'], index_reference)
+    return nodeatt_df
 
 def column_reindexing(node_column, reference_column):
     """ 

@@ -2,27 +2,46 @@ import numpy as np
 import pandas as pd
 import os
 
-def read_node_labels(file):
-    return pd.read_csv(
-        file,
-        header=None,
-        names=["node", "label"],
-        skiprows=1,
-        sep="\t",
-        dtype={"node": np.int64, "label": np.int64},
-    )
+def read_node_labels(file, is_nodelist_full = True):
+    if is_nodelist_full:
+        df = pd.read_csv(
+            file,
+            header=None,
+            names=["node", "label"],
+            skiprows=1,
+            sep="\t",
+            dtype={"node": np.int64, "label": np.int64},
+        )
+    else:
+        df = pd.read_csv(
+            file,
+            header=None,
+            names=["node", "label"],
+            skiprows=1,
+            sep="\t",
+            dtype={"node": object},
+        )
+    return df
 
 
-def read_edge_list(file):
-    return pd.read_csv(
+def read_edge_list(file, is_nodename_int=True):
+    if is_nodename_int:
+        df = pd.read_csv(
         file,
         header=None,
         names=["src", "dst", "weight"],
         skiprows=1,
         sep="\t",
-        dtype={"src": np.int64, "dst": np.int64, "weight": np.float64},
-    )
-
+        dtype={"src": np.int64, "dst": np.int64, "weight": np.float64},)
+    else:
+        df = pd.read_csv(
+        file,
+        header=None,
+        names=["src", "dst", "weight"],
+        skiprows=1,
+        sep="\t",
+        dtype={"src": object, "dst": object, "weight": np.float64},)
+    return df
 
 def read_random_walks(random_walks_file):
     """Reads a list of random walks from a text file.
@@ -89,7 +108,9 @@ def read_embeddings(input_file):
 
 
 def read_node_attributes(file, nodes_as_index=True):
-    return pd.read_csv(file, sep="\t", index_col=[0], dtype=float) if nodes_as_index else pd.read_csv(file, sep="\t", dtype=float)
+
+
+    return pd.read_csv(file, sep="\t", index_col=[0], dtype=float) if nodes_as_index else pd.read_csv(file, sep="\t", dtype=object)
 
 
 
