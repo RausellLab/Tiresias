@@ -16,7 +16,7 @@ def main():
     unique_nodes_df = preprocess.unique_nodes_from_edgelist(merged_edge_lists_df)
     index_reference = unique_nodes_df['node']
     
-    #TODO Reference annotation with gene symbol
+    # Reference annotation with gene symbol
     annotated_df = pd.read_csv("./data/our_protein_coding_gene_list_20760genes_collapsed.tsv", sep = "\t")
     unique_nodes_df_annotated = preprocess.reference_annotation(unique_nodes_df, annotated_df)
     
