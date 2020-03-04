@@ -14,7 +14,7 @@ def run(
     n_walks=10,
     context_size=10,
     epochs=1,
-    p=1,
+    p=0.5,
     q=1,
     verbose=True,
     directed_graph=False,

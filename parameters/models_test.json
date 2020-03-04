@@ -9,7 +9,7 @@
         "n_hidden_feats": [12],
         "n_hidden_layers": [0],
         "dropout": [0.1],
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "n_bootstraps": [5]
     },
@@ -20,7 +20,7 @@
         "n_hidden_feats": [5],
         "n_hidden_layers": [0],
         "dropout": [0.1],
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "n_bootstraps": [5]
     },
@@ -29,7 +29,7 @@
         "n_hidden_layers": [0],
         "dropout": [0],
         "n_bases": [-1],
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "weight_decay": [0],
         "n_bootstraps": [5]
@@ -39,32 +39,32 @@
         "n_hidden_layers": [0],
         "dropout": [0],
         "n_bases": [-1],
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "weight_decay": [0],
         "n_bootstraps": [5]
     },
     "bagging_logistic_regression": {
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "n_bootstraps": [5]
     },
     "bagging_logistic_regression_with_attributes": {
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "n_bootstraps": [5]
     },
     "bagging_mlp": {
         "n_hidden_feats": [8],
         "dropout": [0],
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "n_bootstraps": [5]
     },
     "bagging_mlp_with_attributes": {
         "n_hidden_feats": [8],
         "dropout": [0],
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "n_bootstraps": [5]
     },
@@ -73,7 +73,7 @@
         "n_hidden_layers": [0],
         "dropout": [0],
         "n_bases": [-1],
-        "epochs": [1],
+        "epochs": [100],
         "lr": [0.01],
         "weight_decay": [0],
         "n_bootstraps": [5]
