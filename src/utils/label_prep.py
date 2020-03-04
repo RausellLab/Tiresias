@@ -56,12 +56,12 @@ def label_process(unique_nodes, labels_df):
 
 
 
-def write_processed_labels(labels_process_df):
-    labels_process_df.to_csv("/home/agarcia/Downloads/hola.tsv".replace(".tsv", "_processed.tsv"),sep = "\t" , index = False)
+def write_processed_df(labels_process_df, filepath):
+    labels_process_df.to_csv(filepath.replace(".tsv", "_processed.tsv"),sep = "\t" , index = False)
 
 
-def read_node_attributes(file):
-    node_attrib_df = pd.read_csv(file, sep="\t", index_col=[0], dtype=float)
+def read_node_attributes_noindex(file):
+    node_attrib_df = pd.read_csv(file, sep="\t", dtype=float)
     node_attrib_df_type = node_attrib_df.astype({'node': np.int64})
     
     return node_attrib_df_type
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     label_processed_df = label_process(unique_nodes_df, node_labels_df)
     
 
-    write_processed_labels(label_processed_df)
+    write_processed_df(label_processed_df, filepath)
 
 
     a = 0

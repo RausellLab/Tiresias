@@ -61,9 +61,7 @@ def label_df_generation(reference_df, label_df):
     """
     label_df_processed = reference_df
     label_df_processed["label"] = 0
-    print(label_df_processed)
     label_df_processed.loc[reference_df["node"].isin(label_df['node']),'label'] = 1
-    print(label_df_processed)
     return label_df_processed
 
 def reindex_labels_df_process(node_labels_df):
