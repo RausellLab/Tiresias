@@ -2,6 +2,10 @@
 **/__pycache__
 **/*.pyc
 
+#Visual studio data
+**/.vscode
+**/.*
+
 # MLflow runs
 **/mlruns/
 
@@ -14,3 +18,9 @@ tmp/
 # Reports
 reports/
 !src/reports/
+src/utils/label_prep.py
+src/utils/label_prep copy.py
+src/utils/label_prep.py
+src/utils/adjac_test.py
+data copy/
+data_ciliop/

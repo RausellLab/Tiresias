@@ -1,18 +1,19 @@
 # Configure system resources
 system:
-  cpus: 4
-  gpus: 1
-  memory: 8 # in GB
+  cpus: 2
+  gpus: 0
+  memory: 50 # in GB
 
 # Set input datasets
 data:
   edge_lists:
-    - data/edge_lists/layer_0.tsv
-    - data/edge_lists/layer_1.tsv
-    - data/edge_lists/layer_2.tsv
-  node_attributes: data/node_attributes.tsv
-  train_node_labels: data/train_node_labels.tsv
-  test_node_labels: data/test_node_labels.tsv
+    - ./data/edge_lists/layer_0.tsv
+    - ./data/edge_lists/layer_1.tsv
+    - ./data/edge_lists/layer_2.tsv
+
+  node_attributes: ./data/node_attributes.tsv
+  train_node_labels: ./data/train_node_labels.tsv
+  test_node_labels: ./data/test_node_labels.tsv
 
 # Enable or disable models
 models:
