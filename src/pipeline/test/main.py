@@ -1,4 +1,6 @@
 import ray
+import gc
+import torch
 from functools import partial
 from src import config
 from src.config import artifact_stores
@@ -26,13 +28,13 @@ def main():
         config.gpus = 1
         use_cuda = False
 
-    ray.init(
-        num_cpus=config.cpus,
-        num_gpus=config.gpus,
-        memory=config.memory * 1e9,
-        temp_dir=config.temp_dir,
-        local_mode=True
-    )
+    # ray.init(
+    #     num_cpus=config.cpus,
+    #     num_gpus=config.gpus,
+    #     memory=config.memory * 1e9,
+    #     temp_dir=config.temp_dir,
+    #     local_mode=True
+    # )
 
     results = []
     train_node_labels_file = config.train_node_labels_file_processed
@@ -46,64 +48,146 @@ def main():
         adjacency_matrix_file = adjacency_matrix_files[0]
 
         if config.models["direct_neighbors"]:
-            dn_res = direct_neighbors.remote(
-                adjacency_matrix_file,
-                train_node_labels_file,
-                test_node_labels_file,
-                use_cuda,
-                metadata,
-            )
-            results.append(dn_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    dn_res = direct_neighbors(
+                            adjacency_matrix_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            use_cuda,
+                            metadata,
+                                )
+                    results.append(dn_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+
+            
 
         if config.models["label_spreading"]:
-            for params in param_combinations("label_spreading"):
-                ls_res = label_spreading.remote(
-                    adjacency_matrix_file,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    use_cuda,
-                    params,
-                    metadata,
-                )
-                results.append(ls_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for params in param_combinations("label_spreading"):
+                        ls_res = label_spreading(
+                            adjacency_matrix_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            use_cuda,
+                            params,
+                            metadata,
+                        )
+                        results.append(ls_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
 
         if config.models["rwr"]:
-            for params in param_combinations("rwr"):
-                rwr_res = rwr.remote(
-                    adjacency_matrix_file,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    use_cuda,
-                    params,
-                    metadata,
-                )
-                results.append(rwr_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for params in param_combinations("rwr"):
+                        rwr_res = rwr(
+                            adjacency_matrix_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            use_cuda,
+                            params,
+                            metadata,
+                        )
+                        results.append(rwr_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
 
         if config.models["bagging_gcn"]:
-            for params in param_combinations("bagging_gcn"):
-                bagging_gcn_res = bagging_gcn.remote(
-                    adjacency_matrix_file,
-                    None,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    use_cuda,
-                    params,
-                    metadata,
-                )
-                results.append(bagging_gcn_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for params in param_combinations("bagging_gcn"):
+                        bagging_gcn_res = bagging_gcn(
+                            adjacency_matrix_file,
+                            None,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            use_cuda,
+                            params,
+                            metadata,
+                        )
+                        results.append(bagging_gcn_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
 
         if config.models["bagging_gcn_with_attributes"]:
-            for params in param_combinations("bagging_gcn_with_attributes"):
-                bagging_gcn_att_res = bagging_gcn.remote(
-                    adjacency_matrix_file,
-                    node_attributes_file,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    use_cuda,
-                    params,
-                    metadata,
-                )
-                results.append(bagging_gcn_att_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for params in param_combinations("bagging_gcn_with_attributes"):
+                        bagging_gcn_att_res = bagging_gcn(
+                            adjacency_matrix_file,
+                            node_attributes_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            use_cuda,
+                            params,
+                            metadata,
+                        )
+                        results.append(bagging_gcn_att_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+
+            
 
     for (
         adjacency_matrix_files,
@@ -111,101 +195,208 @@ def main():
     ) in artifact_stores.adjacency_matrices.multi_layer:
 
         if config.models["rwr_m"]:
-            for params in param_combinations("rwr_m"):
-                rwr_m_res = rwr_m.remote(
-                    adjacency_matrix_files,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    False,
-                    params,
-                    metadata,
-                )
-                results.append(rwr_m_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for params in param_combinations("rwr_m"):
+                        rwr_m_res = rwr_m(
+                            adjacency_matrix_files,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            False,
+                            params,
+                            metadata,
+                        )
+                        results.append(rwr_m_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
 
         if config.models["bagging_rgcn"]:
-            for params in param_combinations("bagging_rgcn"):
-                bagging_rgcn_res = bagging_rgcn.remote(
-                    adjacency_matrix_files,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    None,
-                    use_cuda,
-                    params,
-                    metadata,
-                )
-                results.append(bagging_rgcn_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for params in param_combinations("bagging_rgcn"):
+                        bagging_rgcn_res = bagging_rgcn(
+                            adjacency_matrix_files,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            None,
+                            use_cuda,
+                            params,
+                            metadata,
+                        )
+                        results.append(bagging_rgcn_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
 
         if config.models["bagging_rgcn_with_attributes"]:
-            for params in param_combinations("bagging_rgcn_with_attributes"):
-                bagging_rgcn_att_res = bagging_rgcn.remote(
-                    adjacency_matrix_files,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    node_attributes_file,
-                    use_cuda,
-                    params,
-                    metadata,
-                )
-                results.append(bagging_rgcn_att_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for params in param_combinations("bagging_rgcn_with_attributes"):
+                        bagging_rgcn_att_res = bagging_rgcn(
+                            adjacency_matrix_files,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            node_attributes_file,
+                            use_cuda,
+                            params,
+                            metadata,
+                        )
+                        results.append(bagging_rgcn_att_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
+            
 
     for embeddings_files, metadata in artifact_stores.embeddings:
         embeddings_file = embeddings_files[0]
 
         if config.models["bagging_logistic_regression"]:
-            for bagging_log_reg_params in param_combinations(
-                "bagging_logistic_regression"
-            ):
-                lg_res = bagging_logistic_regression.remote(
-                    embeddings_file,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    None,
-                    use_cuda,
-                    bagging_log_reg_params,
-                    metadata,
-                )
-                results.append(lg_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for bagging_log_reg_params in param_combinations("bagging_logistic_regression"):
+                        lg_res = bagging_logistic_regression(
+                            embeddings_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            None,
+                            use_cuda,
+                            bagging_log_reg_params,
+                            metadata,
+                        )
+                        results.append(lg_res)
+
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
 
         if config.models["bagging_logistic_regression_with_attributes"]:
-            for bagging_log_reg_params in param_combinations(
-                "bagging_logistic_regression_with_attributes"
-            ):
-                lg_att_res = bagging_logistic_regression.remote(
-                    embeddings_file,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    node_attributes_file,
-                    use_cuda,
-                    bagging_log_reg_params,
-                    metadata,
-                )
-                results.append(lg_att_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for bagging_log_reg_params in param_combinations("bagging_logistic_regression_with_attributes"):
+                        lg_att_res = bagging_logistic_regression(
+                            embeddings_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            node_attributes_file,
+                            use_cuda,
+                            bagging_log_reg_params,
+                            metadata,
+                        )
+                        results.append(lg_att_res)
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
 
         if config.models["bagging_mlp"]:
-            for bagging_mlp_params in param_combinations("bagging_mlp"):
-                mlp_res = bagging_mlp.remote(
-                    embeddings_file,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    None,
-                    use_cuda,
-                    bagging_mlp_params,
-                    metadata,
-                )
-                results.append(mlp_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for bagging_mlp_params in param_combinations("bagging_mlp"):
+                        mlp_res = bagging_mlp(
+                            embeddings_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            None,
+                            use_cuda,
+                            bagging_mlp_params,
+                            metadata,
+                        )
+                        results.append(mlp_res)
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
+            
 
         if config.models["bagging_mlp_with_attributes"]:
-            for bagging_mlp_params in param_combinations("bagging_mlp_with_attributes"):
-                mlp_res = bagging_mlp.remote(
-                    embeddings_file,
-                    train_node_labels_file,
-                    test_node_labels_file,
-                    node_attributes_file,
-                    use_cuda,
-                    bagging_mlp_params,
-                    metadata,
-                )
-                results.append(mlp_res)
+            retry_counter = 0
+            while retry_counter < 3:
+                try:
+                    for bagging_mlp_params in param_combinations("bagging_mlp_with_attributes"):
+                        mlp_res = bagging_mlp(
+                            embeddings_file,
+                            train_node_labels_file,
+                            test_node_labels_file,
+                            node_attributes_file,
+                            use_cuda,
+                            bagging_mlp_params,
+                            metadata,
+                        )
+                        results.append(mlp_res)
+                    break
+                except RuntimeError as e:
+                    retry_counter += 1
+                    print('Runtime Error {}\nRun Again......{}/{}'.format(e,retry_counter, 3))
+                    if retry_counter == 3:
+                        print('Model Failed after 3 attemps, reduce the amount of input data. Following pipeline')
+                        break
+                finally:
+                    # Handle CUDA OOM Error Safely
+                    gc.collect()
+                    torch.cuda.empty_cache()
+            
+            
 
     if config.models["bagging_rgcn_with_embeddings"]:
         for (
@@ -221,7 +412,7 @@ def main():
                 }
 
                 for params in param_combinations("bagging_rgcn_with_embeddings"):
-                    res = bagging_rgcn_embeddings.remote(
+                    res = bagging_rgcn_embeddings(
                         adjacency_matrix_files,
                         train_node_labels_file,
                         test_node_labels_file,
@@ -232,7 +423,7 @@ def main():
                     )
                     results.append(res)
 
-    ray.get(results)
+    #ray.get(results)
 
 
 if __name__ == "__main__":

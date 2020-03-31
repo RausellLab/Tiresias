@@ -11,7 +11,7 @@ RUN_NAME = "Direct Neighbors"
 MODEL_NAME = "direct-neighbors"
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def direct_neighbors(
     adj_matrix_file, train_node_labels_file, test_node_labels_file, use_cuda, metadata
 ):
