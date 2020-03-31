@@ -47,7 +47,7 @@ def net_prop_with_restart(
         u_mlflow.log_dataframe(ranks_df, "predictions", "results")
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def rwr(
     adj_matrix_file,
     train_node_labels_file,
@@ -69,7 +69,7 @@ def rwr(
     )
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def label_spreading(
     adj_matrix_file,
     train_node_labels_file,
