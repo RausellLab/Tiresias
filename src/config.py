@@ -25,7 +25,6 @@ test_node_labels_file = yaml_config["data"]["test_node_labels"]
 
 
 
-
 # Enabled models
 models = yaml_config["models"]
 
@@ -47,7 +46,13 @@ if not path.isabs(train_node_labels_file):
 
 #Input processed files
 train_node_labels_file_processed = train_node_labels_file.replace(".tsv", "_processed.tsv")
-test_node_labels_file_processed = test_node_labels_file.replace(".tsv", "_processed.tsv")
+
+if test_node_labels_file is not None:
+    test_node_labels_file_processed = test_node_labels_file.replace(".tsv", "_processed.tsv")
+else:
+    test_node_labels_file_processed = train_node_labels_file.replace(".tsv", "_test_processed.tsv")  
+    
+
 edge_lists_files_processed = [f.replace(".tsv", "_processed.tsv") for f in edge_lists_files]
 node_attributes_file_processed = node_attributes_file.replace(".tsv", "_processed.tsv")
 
