@@ -45,7 +45,7 @@ def net_prop_with_restart(
         data_savers.save_ranks(ranks_df, n_nodes, run_name, params)
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def rwr(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
     net_prop_with_restart(
         "Random walk with restart",
@@ -59,7 +59,7 @@ def rwr(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
     )
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def label_spreading(adj_matrix_file, node_labels_file, use_cuda, params, metadata):
     net_prop_with_restart(
         "Label Spreading",

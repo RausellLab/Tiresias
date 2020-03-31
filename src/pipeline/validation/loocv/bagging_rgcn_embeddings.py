@@ -14,7 +14,7 @@ NORMALIZATION = "sym"
 SELF_LOOP = True
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def bagging_rgcn_embeddings(
     adj_matrix_files, node_labels_file, embeddings_file, use_cuda, params, metadata
 ):

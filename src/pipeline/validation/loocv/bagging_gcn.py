@@ -14,7 +14,7 @@ NORMALIZATION = "sym"
 SELF_LOOP = True
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def bagging_gcn(
     adj_matrix_file, node_features_file, node_labels_file, use_cuda, params, metadata
 ):

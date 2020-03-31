@@ -11,7 +11,7 @@ RUN_NAME = "RWR-M"
 MODEL_NAME = "rwr-m"
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def rwr_m(adj_matrix_files, node_labels_file, use_cuda, params, metadata):
     mlflow.set_experiment("LOOCV")
 

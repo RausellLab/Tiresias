@@ -13,7 +13,7 @@ RUN_NAME = "Bagging Logistic Regression"
 MODEL_NAME = "bagging-logistic-regression"
 
 
-@ray.remote(num_gpus=1)
+#@ray.remote(num_gpus=1)
 def bagging_logistic_regression(
     embeddings_file, node_labels_file, node_features_file, use_cuda, params, metadata
 ):
