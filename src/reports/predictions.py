@@ -38,7 +38,12 @@ def main():
         # Get predictions artifact
         abs_artifact_uri = run_info.artifact_uri.replace("file://", "")
         results_artifact_uri = path.join(abs_artifact_uri, "results")
-        predictions_file, *_ = glob(path.join(results_artifact_uri, "predictions*.tsv"))
+
+        #If some models failed, not take into account empty folders
+        try:
+            predictions_file, *_ = glob(path.join(results_artifact_uri, "predictions*.tsv"))
+        except:
+            next
 
         pred_df = pd.read_csv(
             predictions_file, sep="\t", index_col="node", usecols=["node", "rank"]
@@ -48,6 +53,9 @@ def main():
 
     prediction_df = pd.concat(predictions_dfs, axis=1)
     prediction_df.sort_values(by="node", inplace=True)
+    
+    #Remove duplicated columns
+    prediction_df = prediction_df.loc[:,~prediction_df.columns.duplicated()]
 
     #Rename nodes taking the indexes reference
     index_reference_path = path.join(path.split(config.train_node_labels_file)[0],"reference_index.tsv")
