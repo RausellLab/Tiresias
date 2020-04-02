@@ -23,7 +23,8 @@ node_attributes_file = yaml_config["data"]["node_attributes"]
 train_node_labels_file = yaml_config["data"]["train_node_labels"]
 test_node_labels_file = yaml_config["data"]["test_node_labels"]
 
-
+#Fraction of dataset (train) to make the test file if only train node labes has been indicated.
+test_fraction = yaml_config["data"]["test_fraction"]
 
 # Enabled models
 models = yaml_config["models"]

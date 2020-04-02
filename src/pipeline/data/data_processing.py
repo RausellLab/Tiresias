@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from os import path
+import warnings
 from src import config
 from src.utils import preprocess
 from src.utils import io
@@ -34,10 +35,16 @@ def main():
             io.write_processed_df(label_processed_df_reindex, node_labels_path)
 
     else:
+        warnings.warn('Test file has not been indicated. Creating a test file taking random samples form train file',Warning)
         print('Test file has not been indicated. Creating a test file taking random samples form train file')
         #Open node_labels
         node_labels_df_all = io.read_node_labels(config.train_node_labels_file, is_nodelist_full=False)
-        node_label_test = node_labels_df_all.sample(frac=0.3 , random_state=0) 
+        
+        #Take one sample at least to generate the test label file. 
+        if (config.test_fraction * node_labels_df_all.shape[0]) > 1:
+            node_label_test = node_labels_df_all.sample(frac = config.test_fraction , random_state=0) 
+        else:
+            node_label_test = node_labels_df_all.sample(n = 1, random_state=0) 
         node_label_train = node_labels_df_all.drop(node_label_test.index)
 
         #Test processing and writting
