@@ -24,3 +24,12 @@ src/utils/label_prep.py
 src/utils/adjac_test.py
 data copy/
 data_ciliop/
+data/node_attributes_processed.tsv
+data/reference_index.tsv
+data/test_node_labels_processed.tsv
+data/train_node_labels_processed.tsv
+data/edge_lists/layer_0_processed.tsv
+data/edge_lists/layer_1_processed.tsv
+data/edge_lists/layer_2_processed.tsv
+parameters/models_test.json
+parameters/models_validation.json

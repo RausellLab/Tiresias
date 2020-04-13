@@ -19,7 +19,7 @@ This software has been tested on Ubuntu 18.04. It is meant to be run on Linux sy
 1. Clone the repository and get into the Git directory.
 
 ````bash
-git clone git@github.com:RausellLab/Tiresias.git && cd Tiresias
+git clone git@github.com:RausellLab/Tiresias.git && cd Tiresias-develop
 ````
 
 2. Setup a Conda environment and activate it.
