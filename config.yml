@@ -14,7 +14,9 @@ data:
   node_attributes: ./data/node_attributes.tsv
   train_node_labels: ./data/train_node_labels.tsv
   test_node_labels: ./data/test_node_labels.tsv
-
+   
+  # Set fraction of all data used for test file, if not test node labels is not indicated
+  test_fraction: 0.1
 # Enable or disable models
 models:
   direct_neighbors: True
