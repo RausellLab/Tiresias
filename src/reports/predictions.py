@@ -66,21 +66,22 @@ def main():
 
     prediction_df_reindex = prediction_df.set_index(new_index)
     prediction_df_reindex.index.name = "node"
+    try:
 
-    # Create heatmap
-    sns.set(font_scale=1.5)
-    fig, ax = plt.subplots(
-        figsize=(0.7 * prediction_df_reindex.shape[1], 0.5 * prediction_df_reindex.shape[0])
-    )
-    fig.suptitle("Predicted rank for each node by model.")
-    sns.heatmap(prediction_df_reindex.T, annot=True, cbar=False, ax=ax)
+        # Create heatmap
+        sns.set(font_scale=1.5)
+        fig, ax = plt.subplots(
+            figsize=(0.7 * prediction_df_reindex.shape[1], 0.5 * prediction_df_reindex.shape[0])
+        )
+        fig.suptitle("Predicted rank for each node by model.")
+        sns.heatmap(prediction_df_reindex.T, annot=True, cbar=False, ax=ax)
 
-    # Save heatmap
-    out_png_file = path.join(config.REPORTS_DIR, f"predictions_heatmap.png")
-    print(f"Saving {out_png_file}...")
-    fig.savefig(out_png_file, bbox_inches="tight", dpi=150)
-
-
+        # Save heatmap
+        out_png_file = path.join(config.REPORTS_DIR, f"predictions_heatmap.png")
+        print(f"Saving {out_png_file}...")
+        fig.savefig(out_png_file, bbox_inches="tight", dpi=150)
+    except:
+        print('Image size exceed dimensions, too many datapoints. Continuing predictions report generation ')
 
     #Annotating predictions with gene_symbols
 
