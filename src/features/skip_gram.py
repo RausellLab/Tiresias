@@ -38,12 +38,12 @@ def run(
     #print(walks_trim)
     model = Word2Vec(
         walks_trim,
-        size=dimensions,
+        vector_size=dimensions,
         window=context_size,
         min_count=0,
         sg=1,  # use skip-gram
         workers=workers,
-        iter=epochs,
+        epochs=epochs,
     )
 
     model.wv.save_word2vec_format(output_file)
