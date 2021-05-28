@@ -15,9 +15,8 @@ def main():
         edge_list_df = io.read_edge_list(file)
 
         outfile = container.create_artifact_filepath(f"edge_list_{index}.tsv")
-        # Write SNAP compatible edge list, edgelist will be 0 based
-        edge_list_df.iloc[:, 0:2] += 1
-        edge_list_df.to_csv(outfile, sep=" ", header=False, index=False)
+        # Write pecanpy compatible edge list
+        edge_list_df.to_csv(outfile, sep="\t", header=False, index=False)
 
 
 if __name__ == "__main__":
