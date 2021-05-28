@@ -1,7 +1,8 @@
 from src.config import artifact_stores
-from src.features import node2vec_snap
-from src.utils.parameters import param_combinations
 
+from src.features import node2vec_pecan
+from src.utils.parameters import param_combinations
+from src.config import cpus
 
 def random_walks(edge_list_files, walk_length, n_walks, p, q, params):
     container = artifact_stores.random_walks.create_artifact_container()
@@ -12,18 +13,18 @@ def random_walks(edge_list_files, walk_length, n_walks, p, q, params):
 
     for index, edge_list_file in enumerate(edge_list_files):
         outfile = container.create_artifact_filepath(f"random_walks_{index}.txt")
-
-        node2vec_snap.run(
+        
+        node2vec_pecan.run(
             edge_list_file,
             outfile,
             walk_length=walk_length,
             n_walks=n_walks,
             p=p,
             q=q,
-            verbose=True,
+            verbose=False,
             directed_graph=True,
             weighted_graph=True,
-            output_random_walks=True,
+            workers=cpus
         )
 
 
