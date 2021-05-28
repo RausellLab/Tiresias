@@ -86,5 +86,3 @@ artifact_stores = SimpleNamespace(
 REPORTS_DIR = path.join(root_dir, "reports")
 if not path.exists(REPORTS_DIR):
     os.makedirs(REPORTS_DIR)
-
-NODE2VEC_DOCKER_IMAGE = "thibaudma/node2vec"

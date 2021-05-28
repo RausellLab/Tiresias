@@ -76,11 +76,7 @@ CLEAN_ALL_MSG := "WARNING: This will erase ALL generated files. Continue? (Y/N):
 clean-all:	## Erase ALL generated files.
 	@read -p $(CLEAN_ALL_MSG) confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || exit 1
 	rm -rf artifacts/ $(RAY_TMP) mlruns/ reports/
-
-.PHONY: node2vec-image
-node2vec-image:	## Pull node2vec image from the Docker registry.
-	python -m src.init.pull_node2vec
-
+	
 .PHONY: help
 help:	## Display this help.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
