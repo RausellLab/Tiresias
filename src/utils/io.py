@@ -43,6 +43,25 @@ def read_edge_list(file, is_nodename_int=True):
         dtype={"src": object, "dst": object, "weight": np.float64},)
     return df
 
+
+def write_random_walks(random_walks_list, outputfile):
+    """Write a text file of random walks from list of random walks.
+
+    Parameters
+    ----------
+    random_walks_list: str
+        The list containing random walks.
+
+    Returns
+    -------
+    random_walks_file: ndarray
+        The list of the random walks as a numpy array with dtype=int32.
+    """
+    with open(outputfile, 'w') as f:
+        f.write("\n".join(["\t".join(walk) for walk in random_walks_list]))
+
+    
+
 def read_random_walks(random_walks_file):
     """Reads a list of random walks from a text file.
 
@@ -53,10 +72,13 @@ def read_random_walks(random_walks_file):
 
     Returns
     -------
-    random_walks: ndarray
-        The list of the random walks as a numpy array with dtype=int32.
+    random_walks: list
+        The list of the random walks as a numpy array.
     """
-    return np.loadtxt(random_walks_file, delimiter=" ", dtype=np.int32)
+    with open(random_walks_file, 'r') as f:
+        walks = [line.strip().split("\t") for line in f.readlines()]        
+
+    return walks
 
 
 def read_embeddings(input_file):
