@@ -30,14 +30,11 @@ def run(
     workers: int (default: 1)
         Number of worker threads used to train the model.
     """
+    #Concatenation of the random walks
+    walks = [element for sublist in [io.read_random_walks(file) for file in random_walk_files] for element in sublist]
 
-    walks = np.concatenate([io.read_random_walks(file) for file in random_walk_files])
-    #print(walks.shape)
-    walks_trim = np.split(walks, walks.shape[0])
-    walks_trim = [walk[walk!=0].astype(str).tolist() for walk in walks]
-    #print(walks_trim)
     model = Word2Vec(
-        walks_trim,
+        walks,
         vector_size=dimensions,
         window=context_size,
         min_count=0,
